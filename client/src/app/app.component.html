@@ -1,0 +1,139 @@
+<div class="min-h-screen bg-slate-50 p-6">
+  <div class="max-w-6xl mx-auto space-y-6">
+
+    <header class="bg-white p-4 rounded-lg shadow border border-slate-200">
+      <h1 class="text-xl font-bold text-slate-800">ReciHub - 原材料マスタ管理</h1>
+    </header>
+
+    <div class="bg-white p-6 rounded-lg shadow border border-slate-200">
+      <h2 class="text-lg font-bold mb-4 text-slate-700">
+        {{ isEditing ? '✏️ 原材料の編集' : '➕ 原材料の新規登録' }}
+      </h2>
+
+      <form (ngSubmit)="onSubmit()" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+          <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">原材料名 *</label>
+            <input type="text" [(ngModel)]="newIngredient.name" (ngModelChange)="onInputChanged()" name="name" required
+              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">カテゴリ *</label>
+            <select [(ngModel)]="newIngredient.category" (change)="onInputChanged()" name="category"
+              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+              <option value="牛肉">牛肉</option>
+              <option value="豚肉">豚肉</option>
+              <option value="鶏肉">鶏肉</option>
+              <option value="野菜">野菜</option>
+              <option value="調味料">調味料</option>
+              <option value="乳製品">乳製品</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">商品コード (自動採番)</label>
+            <input type="text" [(ngModel)]="newIngredient.code" name="code" readonly
+              class="w-full p-2 border rounded border-slate-200 bg-slate-100 text-slate-500 font-mono">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">仕入価格 (円) *</label>
+            <input type="number" [(ngModel)]="newIngredient.purchase_price" name="purchase_price" min="0" required
+              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">単位 *</label>
+            <select [(ngModel)]="newIngredient.unit" name="unit"
+              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+              <option *ngFor="let u of units" [value]="u">{{ u }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">仕入数量 *</label>
+            <input type="number" [(ngModel)]="newIngredient.purchase_quantity" name="purchase_quantity" min="0.01" step="any" required
+              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">歩留まり率 (%)</label>
+            <input type="number" [(ngModel)]="newIngredient.yield_rate" name="yield_rate" min="1" max="100"
+              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-600 mb-1">アレルゲン (カンマ区切り)</label>
+            <input type="text" [(ngModel)]="newIngredient.allergens" name="allergens" placeholder="例: 小麦,卵,乳"
+              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button *ngIf="isEditing" type="button" (click)="cancelEdit()"
+            class="px-5 py-2 bg-slate-400 text-white font-medium rounded hover:bg-slate-500 transition-colors">
+            キャンセル
+          </button>
+          <button type="submit"
+            class="px-5 py-2 text-white font-medium rounded transition-colors"
+            [ngClass]="isEditing ? 'bg-amber-600 hover:bg-amber-700' : 'bg-blue-600 hover:bg-blue-700'">
+            {{ isEditing ? '修正を保存' : '登録する' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow border border-slate-200">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold text-slate-700">📦 原材料一覧</h2>
+        <span class="text-xs text-slate-400">全 {{ ingredients.length }} 件</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead>
+            <tr class="bg-slate-100 border-b border-slate-200 text-slate-600">
+              <th class="p-3">コード</th>
+              <th class="p-3">カテゴリ</th>
+              <th class="p-3">原材料名</th>
+              <th class="p-3">仕入価格</th>
+              <th class="p-3">仕入数量</th>
+              <th class="p-3">歩留まり</th>
+              <th class="p-3">アレルゲン</th>
+              <th class="p-3 text-center">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ingredients" class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+              <td class="p-3 font-mono font-medium text-slate-600">{{ item.code }}</td>
+              <td class="p-3"><span class="px-2 py-1 bg-slate-200 text-slate-700 rounded text-xs">{{ item.category }}</span></td>
+              <td class="p-3 font-bold text-slate-800">{{ item.name }}</td>
+              <td class="p-3">￥{{ item.purchase_price | number }}</td>
+              <td class="p-3">{{ item.purchase_quantity }}{{ item.unit }}</td>
+              <td class="p-3">{{ item.yield_rate }}%</td>
+              <td class="p-3">
+                <span *ngIf="item.allergens" class="text-xs text-rose-600 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
+                  {{ item.allergens }}
+                </span>
+                <span *ngIf="!item.allergens" class="text-slate-400 text-xs">なし</span>
+              </td>
+              <td class="p-3 text-center">
+                <button (click)="onEdit(item)" class="px-3 py-1 bg-amber-500 text-white text-xs rounded hover:bg-amber-600 transition-colors">
+                  編集
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="ingredients.length === 0">
+              <td colspan="8" class="p-6 text-center text-slate-400">登録された原材料はありません。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
