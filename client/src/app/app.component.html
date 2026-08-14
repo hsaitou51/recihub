@@ -1,139 +1,275 @@
-<div class="min-h-screen bg-slate-50 p-6">
-  <div class="max-w-6xl mx-auto space-y-6">
+<div class="container full-page">
+  <header class="app-header">
+    <div class="header-content">
+      <span class="header-logo">👨‍🍳</span>
+      <h1>KitchenCore - 原材料登録マスタ</h1>
+    </div>
+  </header>
 
-    <header class="bg-white p-4 rounded-lg shadow border border-slate-200">
-      <h1 class="text-xl font-bold text-slate-800">ReciHub - 原材料マスタ管理</h1>
-    </header>
-
-    <div class="bg-white p-6 rounded-lg shadow border border-slate-200">
-      <h2 class="text-lg font-bold mb-4 text-slate-700">
-        {{ isEditing ? '✏️ 原材料の編集' : '➕ 原材料の新規登録' }}
-      </h2>
-
-      <form (ngSubmit)="onSubmit()" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">原材料名 *</label>
-            <input type="text" [(ngModel)]="newIngredient.name" (ngModelChange)="onInputChanged()" name="name" required
-              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+  <form class="form-card">
+    <div class="main-layout">
+      
+      <div class="left-column">
+        <div class="form-row">
+          <div class="form-group col-full">
+            <label>① 原材料名を入力 <span class="required">*</span></label>
+            <input 
+              type="text" 
+              [(ngModel)]="rawMaterial.name" 
+              (ngModelChange)="onNameChange($event)" 
+              name="name" 
+              placeholder="例: 和牛ロース, 豚タン, マグロ, キャベツ, バター, 卵, 醤油" 
+              class="input-text input-lg"
+            >
           </div>
+        </div>
 
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">カテゴリ *</label>
-            <select [(ngModel)]="newIngredient.category" (change)="onInputChanged()" name="category"
-              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
-              <option value="牛肉">牛肉</option>
-              <option value="豚肉">豚肉</option>
-              <option value="鶏肉">鶏肉</option>
-              <option value="野菜">野菜</option>
-              <option value="調味料">調味料</option>
-              <option value="乳製品">乳製品</option>
-              <option value="その他">その他</option>
+        <div class="form-row highlight-box">
+          <div class="form-group col-grow">
+            <label>② 推測・選択分類（変更するとコードも追従）</label>
+            <select [(ngModel)]="selectedCategoryCode" (change)="onCategoryChange()" name="categorySelect" class="select-text select-lg">
+              <option value="">-- 分類を選択してください --</option>
+              
+              <optgroup label="🥩 肉類 (1000000〜)">
+                <option value="1110000">肉類 > 牛肉 > ロース</option>
+                <option value="1120000">肉類 > 牛肉 > バラ</option>
+                <option value="1130000">肉類 > 牛肉 > モモ</option>
+                <option value="1180000">肉類 > 牛肉 > その他(タン・ハツ等)</option>
+                <option value="1190000">肉類 > 牛肉 > 加工品</option>
+                <option value="1210000">肉類 > 豚肉 > ロース</option>
+                <option value="1220000">肉類 > 豚肉 > バラ</option>
+                <option value="1280000">肉類 > 豚肉 > その他</option>
+                <option value="1290000">肉類 > 豚肉 > 加工品(ハム等)</option>
+                <option value="1310000">肉類 > 鶏肉 > モモ</option>
+                <option value="1330000">肉類 > 鶏肉 > ムネ</option>
+                <option value="1350000">肉類 > 鶏肉 > その他(砂肝等)</option>
+                <option value="1370000">肉類 > 鶏肉 > 加工品</option>
+              </optgroup>
+
+              <optgroup label="🐟 魚介類 (2000000〜)">
+                <option value="2110000">魚介類 > 鮮魚</option>
+                <option value="2310000">魚介類 > 甲殻類・貝類</option>
+                <option value="2510000">魚介類 > イカ・タコ</option>
+                <option value="2710000">魚介類 > その他</option>
+                <option value="2910000">魚介類 > 加工品(ツナ・すり身等)</option>
+              </optgroup>
+
+              <optgroup label="🥬 野菜 (3000000〜)">
+                <option value="3110000">野菜 > 葉菜類</option>
+                <option value="3310000">野菜 > 根菜類</option>
+                <option value="3510000">野菜 > 果菜類(トマト・ナス等)</option>
+                <option value="3710000">野菜 > ハーブ類</option>
+                <option value="3810000">野菜 > その他</option>
+                <option value="3910000">野菜 > 加工品(カット・ペースト等)</option>
+              </optgroup>
+
+              <optgroup label="🍎 果物 (4000000〜)">
+                <option value="4110000">果物 > 柑橘類</option>
+                <option value="4310000">果物 > リンゴ・モモ類</option>
+                <option value="4510000">果物 > その他</option>
+                <option value="4710000">果物 > 加工品(ピューレ・缶詰等)</option>
+              </optgroup>
+
+              <optgroup label="🥛 乳製品 (5000000〜)">
+                <option value="5110000">乳製品 > 牛乳・生クリーム</option>
+                <option value="5210000">乳製品 > ヨーグルト</option>
+                <option value="5310000">乳製品 > チーズ・バター</option>
+                <option value="5910000">乳製品 > その他</option>
+              </optgroup>
+
+              <optgroup label="🥚 卵類 (6000000〜)">
+                <option value="6110000">卵類 > 全卵・液卵</option>
+                <option value="6910000">卵類 > その他・加工品</option>
+              </optgroup>
+
+              <optgroup label="🧂 調味料 (7000000〜)">
+                <option value="7110000">調味料 > 基礎調味料(醤油・塩等)</option>
+                <option value="7210000">調味料 > 複合調味料・ソース</option>
+              </optgroup>
+
+              <optgroup label="🛢️ 油類 (8000000〜)">
+                <option value="8110000">油類 > 植物油</option>
+                <option value="8210000">油類 > 動物油・油脂加工品</option>
+              </optgroup>
+
+              <optgroup label="📦 グロッサリー (9000000〜)">
+                <option value="9110000">グロッサリー > 缶詰・瓶詰</option>
+                <option value="9210000">グロッサリー > 乾物・穀類・麺類</option>
+              </optgroup>
+
+              <optgroup label="🍲 仕掛品 (10000000〜)">
+                <option value="10110000">仕掛品 > 自社ソース・ベース</option>
+                <option value="10210000">仕掛品 > 半製品生地</option>
+              </optgroup>
+
+              <optgroup label="🧻 その他・資材包材 (11000000〜)">
+                <option value="11110000">その他・資材包材 > 容器・パック</option>
+                <option value="11210000">その他・資材包材 > 衛生・消耗品</option>
+              </optgroup>
             </select>
           </div>
 
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">商品コード (自動採番)</label>
-            <input type="text" [(ngModel)]="newIngredient.code" name="code" readonly
-              class="w-full p-2 border rounded border-slate-200 bg-slate-100 text-slate-500 font-mono">
+          <div class="form-group col-code">
+            <label>③ 割り当てコード</label>
+            <input type="text" [value]="previewCode" readonly class="input-readonly input-lg monospace">
           </div>
+        </div>
 
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">仕入価格 (円) *</label>
-            <input type="number" [(ngModel)]="newIngredient.purchase_price" name="purchase_price" min="0" required
-              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">単位 *</label>
-            <select [(ngModel)]="newIngredient.unit" name="unit"
-              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
-              <option *ngFor="let u of units" [value]="u">{{ u }}</option>
+        <div class="form-row col-3-grid">
+          <div class="form-group">
+            <label>単位</label>
+            <select [(ngModel)]="rawMaterial.unit" name="unit" class="select-text">
+              <option value="g">g（グラム）</option>
+              <option value="kg">kg（キログラム）</option>
+              <option value="cc">cc(シーシー)</option>
+              <option value="ml">ml（ミリリットル）</option>
+              <option value="L">L（リットル）</option>
+              <option value="個">個</option>
+              <option value="本">本</option>
+              <option value="枚">枚</option>
+              <option value="尾">尾</option>
+              <option value="束">束</option>
+              <option value="缶">缶</option>
+              <option value="瓶">瓶</option>
+              <option value="箱">箱</option>
+              <option value="粒">粒</option>
+              <option value="枝">枝</option>
+              <option value="片">片</option>
+              <option value="茎">茎</option>
+              <option value="フィレ">フィレ</option>
+              <option value="カット">カット</option>
+              <option value="つまみ">つまみ</option>
+              <option value="小匙">小匙</option>
+              <option value="大匙">大匙</option>
+              <option value="羽">羽</option>
+              <option value="回">回</option>
+              <option value="株">株</option>
+              <option value="樽">樽</option>
+              <option value="kg物">kg物</option>
             </select>
           </div>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">仕入数量 *</label>
-            <input type="number" [(ngModel)]="newIngredient.purchase_quantity" name="purchase_quantity" min="0.01" step="any" required
-              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          <div class="form-group">
+            <label>仕入れ数量</label>
+            <input type="number" [(ngModel)]="rawMaterial.purchaseQuantity" name="purchaseQuantity" class="input-text">
           </div>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">歩留まり率 (%)</label>
-            <input type="number" [(ngModel)]="newIngredient.yield_rate" name="yield_rate" min="1" max="100"
-              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          <div class="form-group">
+            <label>歩留率 (%)</label>
+            <input type="number" [(ngModel)]="rawMaterial.yieldRate" name="yieldRate" class="input-text">
           </div>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-600 mb-1">アレルゲン (カンマ区切り)</label>
-            <input type="text" [(ngModel)]="newIngredient.allergens" name="allergens" placeholder="例: 小麦,卵,乳"
-              class="w-full p-2 border rounded border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none">
-          </div>
-
         </div>
 
-        <div class="flex justify-end gap-2 pt-2">
-          <button *ngIf="isEditing" type="button" (click)="cancelEdit()"
-            class="px-5 py-2 bg-slate-400 text-white font-medium rounded hover:bg-slate-500 transition-colors">
-            キャンセル
-          </button>
-          <button type="submit"
-            class="px-5 py-2 text-white font-medium rounded transition-colors"
-            [ngClass]="isEditing ? 'bg-amber-600 hover:bg-amber-700' : 'bg-blue-600 hover:bg-blue-700'">
-            {{ isEditing ? '修正を保存' : '登録する' }}
-          </button>
+        <div class="section-box nutrition-box">
+          <label class="section-title"><span class="icon">📊</span> 栄養成分表示（100g/100mlあたり）</label>
+          <div class="form-row col-5-grid">
+            <div class="form-group">
+              <label>熱量(kcal)</label>
+              <input type="number" [(ngModel)]="rawMaterial.nutrition.calories" name="calories" placeholder="0" class="input-text text-right">
+            </div>
+            <div class="form-group">
+              <label>たんぱく質(g)</label>
+              <input type="number" [(ngModel)]="rawMaterial.nutrition.protein" name="protein" step="0.1" placeholder="0.0" class="input-text text-right">
+            </div>
+            <div class="form-group">
+              <label>脂質(g)</label>
+              <input type="number" [(ngModel)]="rawMaterial.nutrition.fat" name="fat" step="0.1" placeholder="0.0" class="input-text text-right">
+            </div>
+            <div class="form-group">
+              <label>炭水化物(g)</label>
+              <input type="number" [(ngModel)]="rawMaterial.nutrition.carbs" name="carbs" step="0.1" placeholder="0.0" class="input-text text-right">
+            </div>
+            <div class="form-group">
+              <label>食塩相当量(g)</label>
+              <input type="number" [(ngModel)]="rawMaterial.nutrition.salt" name="salt" step="0.01" placeholder="0.00" class="input-text text-right">
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
 
-    <div class="bg-white p-6 rounded-lg shadow border border-slate-200">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-lg font-bold text-slate-700">📦 原材料一覧</h2>
-        <span class="text-xs text-slate-400">全 {{ ingredients.length }} 件</span>
+        <div class="section-box additives-box">
+          <label class="section-title"><span class="icon">🧪</span> 食品添加物</label>
+          <div class="form-group col-full">
+            <textarea 
+              [(ngModel)]="rawMaterial.additives" 
+              name="additives" 
+              rows="3" 
+              placeholder="例: 調味料(アミノ酸等)、着色料(カラメル)、増粘多糖類、pH調整剤" 
+              class="input-textarea"
+            ></textarea>
+          </div>
+        </div>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse text-sm">
-          <thead>
-            <tr class="bg-slate-100 border-b border-slate-200 text-slate-600">
-              <th class="p-3">コード</th>
-              <th class="p-3">カテゴリ</th>
-              <th class="p-3">原材料名</th>
-              <th class="p-3">仕入価格</th>
-              <th class="p-3">仕入数量</th>
-              <th class="p-3">歩留まり</th>
-              <th class="p-3">アレルゲン</th>
-              <th class="p-3 text-center">操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of ingredients" class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-              <td class="p-3 font-mono font-medium text-slate-600">{{ item.code }}</td>
-              <td class="p-3"><span class="px-2 py-1 bg-slate-200 text-slate-700 rounded text-xs">{{ item.category }}</span></td>
-              <td class="p-3 font-bold text-slate-800">{{ item.name }}</td>
-              <td class="p-3">￥{{ item.purchase_price | number }}</td>
-              <td class="p-3">{{ item.purchase_quantity }}{{ item.unit }}</td>
-              <td class="p-3">{{ item.yield_rate }}%</td>
-              <td class="p-3">
-                <span *ngIf="item.allergens" class="text-xs text-rose-600 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded">
-                  {{ item.allergens }}
-                </span>
-                <span *ngIf="!item.allergens" class="text-slate-400 text-xs">なし</span>
-              </td>
-              <td class="p-3 text-center">
-                <button (click)="onEdit(item)" class="px-3 py-1 bg-amber-500 text-white text-xs rounded hover:bg-amber-600 transition-colors">
-                  編集
-                </button>
-              </td>
-            </tr>
-            <tr *ngIf="ingredients.length === 0">
-              <td colspan="8" class="p-6 text-center text-slate-400">登録された原材料はありません。</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="right-column">
+        <div class="allergen-section">
+          <h3><span class="icon">📋</span> アレルギー特定原材料設定（全29品目）</h3>
+
+          <div class="allergen-group mandatory">
+            <h4>🚨 表示義務（特定原材料 9品目）</h4>
+            <div class="allergen-grid">
+              <label *ngFor="let item of mandatoryAllergens" class="allergen-card" [class.selected]="item.selected">
+                <input type="checkbox" [(ngModel)]="item.selected" [name]="'allergen_' + item.id">
+                <span class="allergen-icon">{{ item.icon }}</span>
+                <span class="allergen-name">{{ item.name }}</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="allergen-group recommended">
+            <h4>📋 表示推奨（特定原材料に準ずるもの 20品目）</h4>
+            <div class="allergen-grid">
+              <label *ngFor="let item of recommendedAllergens" class="allergen-card" [class.selected]="item.selected">
+                <input type="checkbox" [(ngModel)]="item.selected" [name]="'allergen_' + item.id">
+                <span class="allergen-icon">{{ item.icon }}</span>
+                <span class="allergen-name">{{ item.name }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
 
+    <div class="form-actions">
+      <button type="button" (click)="saveRawMaterial()" class="btn-primary">💾 分類確認・決定（マスタに保存）</button>
+    </div>
+  </form>
+
+  <div class="list-card full-width-card" *ngIf="savedList.length > 0">
+    <h3>📂 登録済み原材料マスタ一覧（{{ savedList.length }}件）</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>コード</th>
+            <th>分類</th>
+            <th>原材料名</th>
+            <th>単位</th>
+            <th>仕入れ数</th>
+            <th>歩留率</th>
+            <th>栄養成分 (熱量/P/F/C/塩)</th>
+            <th>添加物</th>
+            <th>アレルゲン</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of savedList">
+            <td class="monospace">{{ item.code }}</td>
+            <td>{{ item.categoryName }}</td>
+            <td><strong>{{ item.name }}</strong></td>
+            <td>{{ item.unit }}</td>
+            <td class="text-right">{{ item.purchaseQuantity }}</td>
+            <td class="text-right">{{ item.yieldRate }}%</td>
+            <td class="text-sm text-center">
+              {{ item.nutrition.calories || 0 }}<span class="unit">kcal</span> / 
+              <span class="nutrition-label">P:</span>{{ item.nutrition.protein || 0 }}<span class="unit">g</span> / 
+              <span class="nutrition-label">F:</span>{{ item.nutrition.fat || 0 }}<span class="unit">g</span> / 
+              <span class="nutrition-label">C:</span>{{ item.nutrition.carbs || 0 }}<span class="unit">g</span> / 
+              <span class="nutrition-label">塩:</span>{{ item.nutrition.salt || 0 }}<span class="unit">g</span>
+            </td>
+            <td class="text-sm additive-cell">{{ item.additives || '-' }}</td>
+            <td class="allergen-cell">{{ item.allergens.join(', ') || 'なし' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

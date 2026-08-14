@@ -1,0 +1,373 @@
+/* --- グローバル設定（フルワイド & ベージュ背景） --- */
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #fcfaf5; /* 柔らかいベージュの背景 */
+}
+
+.container.full-page {
+  width: 100%;
+  max-width: 100%; /* 画面いっぱい */
+  margin: 0;
+  padding: 16px 24px; /* 最低限の余白 */
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  color: #443; /* 少し茶色味を帯びた文字色 */
+}
+
+/* --- ヘッダー（テラコッタ） --- */
+.app-header {
+  margin-bottom: 16px;
+  border-bottom: 2px solid #d4a373; /* アクセントライン */
+  padding-bottom: 8px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo {
+  font-size: 2rem;
+}
+
+.app-header h1 {
+  font-size: 1.6rem;
+  color: #a0522d; /* テラコッタ/シエナ（オレンジブラウン） */
+  margin: 0;
+  font-weight: 800;
+}
+
+/* --- メインカード（フルワイド化） --- */
+.form-card {
+  background: #ffffff;
+  border: 1px solid #e9e0d3;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 15px -3px rgba(160, 80, 0, 0.06); /* ほんのり茶色の影 */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- 左右2分割レイアウト --- */
+.main-layout {
+  display: flex;
+  gap: 32px; /* 余白を広めに */
+}
+
+.left-column {
+  flex: 1.3; /* 基本情報を少し広めに */
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.right-column {
+  flex: 1;
+  border-left: 2px dashed #e9e0d3; /* 点線でオシャレに分割 */
+  padding-left: 32px;
+}
+
+/* --- フォーム行・グリッド --- */
+.form-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+}
+
+.col-full { width: 100%; }
+.col-grow { flex: 1; }
+.col-code { width: 180px; }
+
+.col-3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* 栄養成分5項目 */
+.col-5-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+/* --- 各セクションボックス（クリーム色ハイライト） --- */
+.section-box {
+  background: #fffdf5; /* 淡いクリーム色 */
+  border: 1px solid #f3e9dc;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.section-title {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #896e51; /* くすんだブラウン */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.section-title .icon {
+  font-size: 1.1rem;
+}
+
+.highlight-box {
+  background-color: #fffdec; /* さらに濃いクリーム色 */
+  border: 1px solid #f9f2ca;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #765;
+}
+
+.required {
+  color: #d94111; /* 温かい赤 */
+}
+
+/* --- 入力欄・選択枠（明確な四角枠デザイン） --- */
+.input-text,
+.select-text,
+.input-textarea,
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.98rem;
+  border: 2px solid #decab5; /* ベージュ系のしっかりした枠線 */
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #332;
+  appearance: auto;
+  -webkit-appearance: auto;
+}
+
+.input-lg,
+.select-lg {
+  padding: 12px 16px;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.input-textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.input-text:focus,
+.select-text:focus,
+.input-textarea:focus,
+select:focus {
+  border-color: #a0522d; /* フォーカス時にテラコッタ */
+  box-shadow: 0 0 0 4px rgba(160, 82, 45, 0.12); /* 温かい光 */
+}
+
+/* 読み取り専用（自動採番コード） */
+.input-readonly {
+  background-color: #f1eae0;
+  border: 2px solid #decab5;
+  color: #654;
+  font-weight: bold;
+  cursor: not-allowed;
+}
+
+/* --- アレルギー設定（カラフルに） --- */
+.allergen-section h3 {
+  font-size: 1.1rem;
+  color: #a0522d;
+  margin-top: 0;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.allergen-group {
+  margin-bottom: 20px;
+}
+
+.allergen-group h4 {
+  font-size: 0.9rem;
+  color: #876;
+  margin-bottom: 10px;
+  padding-left: 8px;
+  border-left: 3px solid #eee;
+}
+
+.allergen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* 少し広く */
+  gap: 8px;
+}
+
+.allergen-card {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid #decab5;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.allergen-card:hover {
+  border-color: #d4a373;
+  background-color: #fffdf5;
+}
+
+/* 🚨 表示義務：選択時（コーラルピンク） */
+.mandatory .allergen-card.selected {
+  background-color: #fff1f0; /* コーラルピンク系背景 */
+  border-color: #ffccc7;
+  color: #c41d7f; /* 濃いピンク文字 */
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(200, 0, 0, 0.08);
+}
+
+/* 📋 表示推奨：選択時（淡いイエロー） */
+.recommended .allergen-card.selected {
+  background-color: #feffe6; /* 淡いイエロー背景 */
+  border-color: #fffb8f;
+  color: #ad8b00; /* 濃いイエロー/ゴールド文字 */
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(200, 150, 0, 0.08);
+}
+
+/* --- アクションボタン（テラコッタ） --- */
+.form-actions {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.btn-primary {
+  background: #a0522d; /* テラコッタ */
+  color: white;
+  border: none;
+  padding: 14px 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 30px; /* 丸みを持たせてリッチに */
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(160, 82, 45, 0.25);
+}
+
+.btn-primary:hover {
+  background: #8b4513; /* サドルブラウン（より濃く） */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(160, 82, 45, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* --- 登録済み一覧テーブル（フルワイド & カラフル） --- */
+.list-card.full-width-card {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border: 1px solid #e9e0d3;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.list-card h3 {
+  font-size: 1.2rem;
+  color: #a0522d;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.table-wrapper {
+  overflow-x: auto; /* 横スクロール対応 */
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+}
+
+th, td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #f3e9dc;
+  text-align: left;
+}
+
+th {
+  background: #fdfaf5; /* ベージュ系の薄い背景 */
+  color: #896e51;
+  font-weight: 700;
+  border-top: 1px solid #f3e9dc;
+}
+
+/* 隅丸セルのための設定 */
+th:first-child { border-top-left-radius: 8px; border-left: 1px solid #f3e9dc; }
+th:last-child { border-top-right-radius: 8px; border-right: 1px solid #f3e9dc; }
+td:first-child { border-left: 1px solid #f3e9dc; }
+td:last-child { border-right: 1px solid #f3e9dc; }
+tr:last-child td { border-bottom: 1px solid #f3e9dc; }
+tr:last-child td:first-child { border-bottom-left-radius: 8px; }
+tr:last-child td:last-child { border-bottom-right-radius: 8px; }
+
+tr:hover td {
+  background-color: #fffdf8; /* ホバー時にうっすらハイライト */
+}
+
+/* テーブル内の書式 */
+.text-sm { font-size: 0.82rem; color: #665; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.monospace { font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-weight: 500; color: #a0522d; }
+
+.unit { color: #998; font-size: 0.8em; margin-left: 1px; }
+.nutrition-label { color: #987; font-weight: bold; margin-right: 1px; }
+
+.additive-cell { max-width: 200px; line-height: 1.4; }
+.allergen-cell { color: #c41d7f; font-weight: 500; }
+
+/* --- レスポンシブ調整（900px以下） --- */
+@media (max-width: 900px) {
+  .container.full-page { padding: 10px; }
+  .form-card { padding: 16px; }
+  .main-layout { flex-direction: column; gap: 20px; }
+  .right-column {
+    border-left: none;
+    padding-left: 0;
+    border-top: 2px dashed #e9e0d3;
+    padding-top: 20px;
+  }
+  .col-5-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .col-3-grid { grid-template-columns: 1fr; gap: 8px; }
+  .allergen-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+}
