@@ -19,14 +19,22 @@ interface NutritionData {
 
 interface SavedMaterial {
   code: string;
+  categoryCode: string;
   categoryName: string;
   name: string;
   unit: string;
   purchaseQuantity: number;
+  purchasePrice: number;
   yieldRate: number;
   nutrition: NutritionData;
   additives: string;
   allergens: string[];
+}
+
+interface CategoryOption {
+  code: string;
+  name: string;
+  parentCode?: string;
 }
 
 @Component({
@@ -41,11 +49,158 @@ export class AppComponent {
 
   selectedCategoryCode = '';
   previewCode = 'RM-------';
+  
+  // 🔍 フリーワード検索用
+  searchQuery = '';
+
+  // 🔻 3段階連動分類検索用変数
+  searchMajorCategory = '';
+  searchMiddleCategory = '';
+  searchDetailCategory = '';
+
+  // 🥩 1段階目: 大分類データ
+  majorCategories: CategoryOption[] = [
+    { code: '1', name: '🥩 肉類' },
+    { code: '2', name: '🐟 魚介類' },
+    { code: '3', name: '🥬 野菜' },
+    { code: '4', name: '🍎 果物' },
+    { code: '5', name: '🥛 乳製品' },
+    { code: '6', name: '🥚 卵類' },
+    { code: '7', name: '🧂 調味料' },
+    { code: '8', name: '🛢️ 油類' },
+    { code: '9', name: '📦 グロッサリー' },
+    { code: '10', name: '🍲 仕掛品' },
+    { code: '11', name: '🧻 その他・資材包材' }
+  ];
+
+  // 🍖 2段階目: 中分類マスターデータ
+  allMiddleCategories: CategoryOption[] = [
+    // 肉類
+    { code: '11', name: '牛肉', parentCode: '1' },
+    { code: '12', name: '豚肉', parentCode: '1' },
+    { code: '13', name: '鶏肉', parentCode: '1' },
+    // 魚介類
+    { code: '21', name: '鮮魚', parentCode: '2' },
+    { code: '23', name: '貝・甲殻類', parentCode: '2' },
+    { code: '25', name: 'イカ・タコ', parentCode: '2' },
+    { code: '27', name: 'その他魚介', parentCode: '2' },
+    { code: '29', name: '魚介加工品', parentCode: '2' },
+    // 野菜
+    { code: '31', name: '葉菜類', parentCode: '3' },
+    { code: '33', name: '根菜類', parentCode: '3' },
+    { code: '35', name: '果菜類', parentCode: '3' },
+    { code: '37', name: 'ハーブ類', parentCode: '3' },
+    { code: '38', name: 'その他野菜', parentCode: '3' },
+    { code: '39', name: '野菜加工品', parentCode: '3' },
+    // 果物
+    { code: '41', name: '柑橘類', parentCode: '4' },
+    { code: '43', name: 'リンゴ・モモ類', parentCode: '4' },
+    { code: '45', name: 'その他フルーツ', parentCode: '4' },
+    { code: '47', name: '果物加工品', parentCode: '4' },
+    // 乳製品
+    { code: '51', name: '牛乳・生クリーム', parentCode: '5' },
+    { code: '52', name: '発酵乳', parentCode: '5' },
+    { code: '53', name: '油脂・チーズ', parentCode: '5' },
+    { code: '59', name: 'その他乳製品', parentCode: '5' },
+    // 卵類
+    { code: '61', name: '卵', parentCode: '6' },
+    { code: '69', name: '卵加工品', parentCode: '6' },
+    // 調味料
+    { code: '71', name: '基礎調味料', parentCode: '7' },
+    { code: '72', name: '複合調味料', parentCode: '7' },
+    // 油類
+    { code: '81', name: '植物油', parentCode: '8' },
+    { code: '82', name: '動物油', parentCode: '8' },
+    // グロッサリー
+    { code: '91', name: '缶詰・瓶詰', parentCode: '9' },
+    { code: '92', name: '乾物・穀類', parentCode: '9' },
+    // 仕掛品
+    { code: '101', name: 'ベース仕込', parentCode: '10' },
+    { code: '102', name: '半製品', parentCode: '10' },
+    // 資材包材
+    { code: '111', name: '容器・包装', parentCode: '11' },
+    { code: '112', name: '消耗品', parentCode: '11' }
+  ];
+
+  // 🥩 3段階目: 詳細分類マスターデータ（7桁のカテゴリコードにそのまま連動）
+  allDetailCategories: CategoryOption[] = [
+    { code: '1110000', name: '牛フィレ', parentCode: '11' },
+    { code: '1130000', name: '牛ロース', parentCode: '11' },
+    { code: '1140000', name: '牛バラ', parentCode: '11' },
+    { code: '1150000', name: '牛モモ', parentCode: '11' },
+    { code: '1160000', name: '牛その他(タン・ハツ等)', parentCode: '11' },
+    { code: '1190000', name: '牛肉加工品', parentCode: '11' },
+    { code: '1210000', name: '豚ロース', parentCode: '12' },
+    { code: '1220000', name: '豚バラ', parentCode: '12' },
+    { code: '1280000', name: '豚その他', parentCode: '12' },
+    { code: '1290000', name: '豚加工品(ハム等)', parentCode: '12' },
+    { code: '1310000', name: '鶏モモ', parentCode: '13' },
+    { code: '1330000', name: '鶏ムネ', parentCode: '13' },
+    { code: '1350000', name: '鶏その他(砂肝等)', parentCode: '13' },
+    { code: '1370000', name: '鶏肉加工品', parentCode: '13' },
+    { code: '2110000', name: '鮮魚全般', parentCode: '21' },
+    { code: '2310000', name: 'エビ・カニ・貝', parentCode: '23' },
+    { code: '2510000', name: 'イカ・タコ類', parentCode: '25' },
+    { code: '2710000', name: 'その他魚介', parentCode: '27' },
+    { code: '2910000', name: 'ツナ・すり身等', parentCode: '29' },
+    { code: '3110000', name: 'キャベツ・レタス等', parentCode: '31' },
+    { code: '3310000', name: '大根・人参等', parentCode: '33' },
+    { code: '3510000', name: 'トマト・ナス等', parentCode: '35' },
+    { code: '3710000', name: 'フレッシュハーブ', parentCode: '37' },
+    { code: '3810000', name: 'その他野菜', parentCode: '38' },
+    { code: '3910000', name: 'カット・ペースト等', parentCode: '39' },
+    { code: '4110000', name: 'オレンジ・レモン等', parentCode: '41' },
+    { code: '4310000', name: 'リンゴ・モモ等', parentCode: '43' },
+    { code: '4510000', name: 'その他フルーツ', parentCode: '45' },
+    { code: '4710000', name: 'ピューレ・缶詰等', parentCode: '47' },
+    { code: '5110000', name: '牛乳・生クリーム', parentCode: '51' },
+    { code: '5210000', name: 'ヨーグルト', parentCode: '52' },
+    { code: '5310000', name: 'チーズ・バター', parentCode: '53' },
+    { code: '5910000', name: 'その他乳製品', parentCode: '59' },
+    { code: '6110000', name: '全卵・液卵', parentCode: '61' },
+    { code: '6910000', name: 'その他・卵加工品', parentCode: '69' },
+    { code: '7110000', name: '醤油・塩・砂糖等', parentCode: '71' },
+    { code: '7210000', name: 'ソース・ドレッシング', parentCode: '72' },
+    { code: '8110000', name: 'サラダ油・オリーブ油', parentCode: '81' },
+    { code: '8210000', name: 'ラード・油脂加工品', parentCode: '82' },
+    { code: '9110000', name: '缶詰・瓶詰製品', parentCode: '91' },
+    { code: '9210000', name: 'パスタ・米・乾物', parentCode: '92' },
+    { code: '10110000', name: '自社ソース・出汁', parentCode: '101' },
+    { code: '10210000', name: '生地・パーツ仕込', parentCode: '102' },
+    { code: '11110000', name: 'テイクアウト容器・パック', parentCode: '111' },
+    { code: '11210000', name: '衛生・ラップ・手袋', parentCode: '112' }
+  ];
+
+  // 選択された大分類に応じて絞り込まれる中分類リスト
+  get filteredMiddleCategories(): CategoryOption[] {
+    if (!this.searchMajorCategory) return [];
+    return this.allMiddleCategories.filter(item => item.parentCode === this.searchMajorCategory);
+  }
+
+  // 選択された中分類に応じて絞り込まれる詳細分類リスト
+  get filteredDetailCategories(): CategoryOption[] {
+    if (!this.searchMiddleCategory) return [];
+    return this.allDetailCategories.filter(item => item.parentCode === this.searchMiddleCategory);
+  }
+
+  // 🔄 プルダウン変更時のクリア処理
+  onSearchMajorChange() {
+    this.searchMiddleCategory = '';
+    this.searchDetailCategory = '';
+  }
+
+  onSearchMiddleChange() {
+    this.searchDetailCategory = '';
+  }
+
+  // ✏️ 現在編集中のコード
+  editingCode: string | null = null;
 
   rawMaterial = {
     name: '',
-    unit: 'g',
-    purchaseQuantity: 1000,
+    unit: 'kg',
+    purchaseQuantity: 1,
+    purchasePrice: 0,
     yieldRate: 100,
     nutrition: {
       calories: null as number | null,
@@ -59,7 +214,71 @@ export class AppComponent {
 
   savedList: SavedMaterial[] = [];
 
-  // 特定原材料 9品目
+  get unitPrice(): number {
+    if (!this.rawMaterial.purchaseQuantity || this.rawMaterial.purchaseQuantity <= 0) return 0;
+    return (this.rawMaterial.purchasePrice || 0) / this.rawMaterial.purchaseQuantity;
+  }
+
+  // 🔍 検索ロジック (キーワード ＋ 3段階連動分類検索)
+  get filteredSavedList(): SavedMaterial[] {
+    return this.savedList.filter(item => {
+      // 1. キーワード一致チェック
+      const q = this.searchQuery.trim().toLowerCase();
+      const matchesQuery = !q || (
+        item.name.toLowerCase().includes(q) ||
+        item.code.toLowerCase().includes(q) ||
+        item.categoryName.toLowerCase().includes(q) ||
+        item.additives.toLowerCase().includes(q)
+      );
+
+      // 2. 3段階分類一致チェック
+      let matchesCategory = true;
+
+      // 詳細分類（7桁コード）が指定されている場合：完全一致
+      if (this.searchDetailCategory) {
+        matchesCategory = item.categoryCode === this.searchDetailCategory;
+      } 
+      // 中分類が指定されている場合：前方一致（例: 肉類・牛肉="11"）
+      else if (this.searchMiddleCategory) {
+        matchesCategory = item.categoryCode.startsWith(this.searchMiddleCategory);
+      } 
+      // 大分類が指定されている場合：前方一致（例: 肉類="1"）
+      else if (this.searchMajorCategory) {
+        matchesCategory = item.categoryCode.startsWith(this.searchMajorCategory);
+      }
+
+      return matchesQuery && matchesCategory;
+    });
+  }
+
+  editMaterial(item: SavedMaterial) {
+    this.editingCode = item.code;
+    this.previewCode = item.code;
+    this.selectedCategoryCode = item.categoryCode;
+
+    this.rawMaterial = {
+      name: item.name,
+      unit: item.unit,
+      purchaseQuantity: item.purchaseQuantity,
+      purchasePrice: item.purchasePrice || 0,
+      yieldRate: item.yieldRate,
+      nutrition: { ...item.nutrition },
+      additives: item.additives
+    };
+
+    this.mandatoryAllergens.forEach(a => a.selected = item.allergens.includes(a.name));
+    this.recommendedAllergens.forEach(a => a.selected = item.allergens.includes(a.name));
+
+    const formEl = document.getElementById('form-top');
+    if (formEl) {
+      formEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  cancelEdit() {
+    this.resetForm();
+  }
+
   mandatoryAllergens: AllergenItem[] = [
     { id: 'egg', name: '卵', icon: '🥚', selected: false },
     { id: 'milk', name: '乳', icon: '🥛', selected: false },
@@ -72,7 +291,6 @@ export class AppComponent {
     { id: 'crab', name: 'カニ', icon: '🦀', selected: false }
   ];
 
-  // 特定原材料に準ずるもの 20品目
   recommendedAllergens: AllergenItem[] = [
     { id: 'beef', name: '牛肉', icon: '🥩', selected: false },
     { id: 'pork', name: '豚肉', icon: '🐖', selected: false },
@@ -97,17 +315,19 @@ export class AppComponent {
   ];
 
   onNameChange(name: string) {
+    if (this.editingCode) return;
+
     if (!name) {
       this.selectedCategoryCode = '';
       this.previewCode = 'RM-------';
       return;
     }
 
-    // 自動推測ロジック（最新分類コードに対応）
-    if (name.includes('牛') && name.includes('ロース')) this.selectedCategoryCode = '1110000';
-    else if (name.includes('牛') && name.includes('バラ')) this.selectedCategoryCode = '1120000';
-    else if (name.includes('牛') && (name.includes('タン') || name.includes('ハツ'))) this.selectedCategoryCode = '1180000';
-    else if (name.includes('牛')) this.selectedCategoryCode = '1130000';
+    if (name.includes('牛') && name.includes('フィレ')) this.selectedCategoryCode = '1110000';
+    else if (name.includes('牛') && name.includes('ロース')) this.selectedCategoryCode = '1130000';
+    else if (name.includes('牛') && name.includes('バラ')) this.selectedCategoryCode = '1140000';
+    else if (name.includes('牛') && (name.includes('タン') || name.includes('ハツ'))) this.selectedCategoryCode = '1160000';
+    else if (name.includes('牛')) this.selectedCategoryCode = '1150000';
     else if (name.includes('豚') && name.includes('ロース')) this.selectedCategoryCode = '1210000';
     else if (name.includes('豚') && name.includes('バラ')) this.selectedCategoryCode = '1220000';
     else if (name.includes('豚') && (name.includes('ハム') || name.includes('ベーコン'))) this.selectedCategoryCode = '1290000';
@@ -132,7 +352,9 @@ export class AppComponent {
   }
 
   onCategoryChange() {
-    this.updatePreviewCode();
+    if (!this.editingCode) {
+      this.updatePreviewCode();
+    }
   }
 
   updatePreviewCode() {
@@ -160,79 +382,81 @@ export class AppComponent {
       ...this.recommendedAllergens.filter(a => a.selected).map(a => a.name)
     ];
 
-    this.savedList.push({
-      code: this.previewCode,
-      categoryName: this.getCategoryLabel(this.selectedCategoryCode),
-      name: this.rawMaterial.name,
-      unit: this.rawMaterial.unit,
-      purchaseQuantity: this.rawMaterial.purchaseQuantity,
-      yieldRate: this.rawMaterial.yieldRate,
-      nutrition: { ...this.rawMaterial.nutrition },
-      additives: this.rawMaterial.additives,
-      allergens: selectedAllergens
-    });
+    if (this.editingCode) {
+      const index = this.savedList.findIndex(item => item.code === this.editingCode);
+      if (index !== -1) {
+        this.savedList[index] = {
+          code: this.editingCode,
+          categoryCode: this.selectedCategoryCode,
+          categoryName: this.getCategoryLabel(this.selectedCategoryCode),
+          name: this.rawMaterial.name,
+          unit: this.rawMaterial.unit,
+          purchaseQuantity: this.rawMaterial.purchaseQuantity,
+          purchasePrice: this.rawMaterial.purchasePrice || 0,
+          yieldRate: this.rawMaterial.yieldRate,
+          nutrition: { ...this.rawMaterial.nutrition },
+          additives: this.rawMaterial.additives,
+          allergens: selectedAllergens
+        };
+        alert('変更を上書き更新しました！');
+      }
+    } else {
+      this.savedList.push({
+        code: this.previewCode,
+        categoryCode: this.selectedCategoryCode,
+        categoryName: this.getCategoryLabel(this.selectedCategoryCode),
+        name: this.rawMaterial.name,
+        unit: this.rawMaterial.unit,
+        purchaseQuantity: this.rawMaterial.purchaseQuantity,
+        purchasePrice: this.rawMaterial.purchasePrice || 0,
+        yieldRate: this.rawMaterial.yieldRate,
+        nutrition: { ...this.rawMaterial.nutrition },
+        additives: this.rawMaterial.additives,
+        allergens: selectedAllergens
+      });
 
-    this.categoryCounters[this.selectedCategoryCode] = (this.categoryCounters[this.selectedCategoryCode] || 1) + 1;
+      this.categoryCounters[this.selectedCategoryCode] = (this.categoryCounters[this.selectedCategoryCode] || 1) + 1;
+      alert('確定保存しました！');
+    }
 
-    // フォームリセット
-    this.rawMaterial.name = '';
+    this.sortSavedList();
+    this.resetForm();
+  }
+
+  sortSavedList() {
+    this.savedList.sort((a, b) => 
+      a.code.localeCompare(b.code, undefined, { numeric: true, sensitivity: 'base' })
+    );
+  }
+
+  resetForm() {
+    this.editingCode = null;
+    this.rawMaterial = {
+      name: '',
+      unit: 'kg',
+      purchaseQuantity: 1,
+      purchasePrice: 0,
+      yieldRate: 100,
+      nutrition: { calories: null, protein: null, fat: null, carbs: null, salt: null },
+      additives: ''
+    };
     this.selectedCategoryCode = '';
     this.previewCode = 'RM-------';
-    this.rawMaterial.nutrition = { calories: null, protein: null, fat: null, carbs: null, salt: null };
-    this.rawMaterial.additives = '';
     this.mandatoryAllergens.forEach(a => a.selected = false);
     this.recommendedAllergens.forEach(a => a.selected = false);
-
-    alert('確定保存しました！');
   }
 
   getCategoryLabel(code: string): string {
-    const labels: { [key: string]: string } = {
-      '1110000': '肉類 > 牛肉 > ロース',
-      '1120000': '肉類 > 牛肉 > バラ',
-      '1130000': '肉類 > 牛肉 > モモ',
-      '1180000': '肉類 > 牛肉 > その他(タン・ハツ等)',
-      '1190000': '肉類 > 牛肉 > 加工品',
-      '1210000': '肉類 > 豚肉 > ロース',
-      '1220000': '肉類 > 豚肉 > バラ',
-      '1280000': '肉類 > 豚肉 > その他',
-      '1290000': '肉類 > 豚肉 > 加工品(ハム等)',
-      '1310000': '肉類 > 鶏肉 > モモ',
-      '1330000': '肉類 > 鶏肉 > ムネ',
-      '1350000': '肉類 > 鶏肉 > その他(砂肝等)',
-      '1370000': '肉類 > 鶏肉 > 加工品',
-      '2110000': '魚介類 > 鮮魚',
-      '2310000': '魚介類 > 甲殻類・貝類',
-      '2510000': '魚介類 > イカ・タコ',
-      '2710000': '魚介類 > その他',
-      '2910000': '魚介類 > 加工品(ツナ・すり身等)',
-      '3110000': '野菜 > 葉菜類',
-      '3310000': '野菜 > 根菜類',
-      '3510000': '野菜 > 果菜類(トマト・ナス等)',
-      '3710000': '野菜 > ハーブ類',
-      '3810000': '野菜 > その他',
-      '3910000': '野菜 > 加工品(カット・ペースト等)',
-      '4110000': '果物 > 柑橘類',
-      '4310000': '果物 > リンゴ・モモ類',
-      '4510000': '果物 > その他',
-      '4710000': '果物 > 加工品(ピューレ・缶詰等)',
-      '5110000': '乳製品 > 牛乳・生クリーム',
-      '5210000': '乳製品 > ヨーグルト',
-      '5310000': '乳製品 > チーズ・バター',
-      '5910000': '乳製品 > その他',
-      '6110000': '卵類 > 全卵・液卵',
-      '6910000': '卵類 > その他・加工品',
-      '7110000': '調味料 > 基礎調味料(醤油・塩等)',
-      '7210000': '調味料 > 複合調味料・ソース',
-      '8110000': '油類 > 植物油',
-      '8210000': '油類 > 動物油・油脂加工品',
-      '9110000': 'グロッサリー > 缶詰・瓶詰',
-      '9210000': 'グロッサリー > 乾物・穀類・麺類',
-      '10110000': '仕掛品 > 自社ソース・ベース',
-      '10210000': '仕掛品 > 半製品生地',
-      '11110000': 'その他・資材包材 > 容器・パック',
-      '11210000': 'その他・資材包材 > 衛生・消耗品'
-    };
-    return labels[code] || 'その他';
+    const detail = this.allDetailCategories.find(d => d.code === code);
+    if (!detail) return 'その他';
+
+    const middle = this.allMiddleCategories.find(m => m.code === detail.parentCode);
+    const major = this.majorCategories.find(mj => mj.code === middle?.parentCode);
+
+    const majorName = major ? major.name.replace(/^[^\s]+\s*/, '') : '';
+    const middleName = middle ? middle.name : '';
+    const detailName = detail.name;
+
+    return `${majorName} > ${middleName} > ${detailName}`;
   }
 }

@@ -1,373 +1,697 @@
-/* --- グローバル設定（フルワイド & ベージュ背景） --- */
-:host {
-  display: block;
-  min-height: 100vh;
-  background-color: #fcfaf5; /* 柔らかいベージュの背景 */
+/* ==========================================================================
+KitchenCore - アプリ全体基本スタイル & リセット
+========================================================================== */
+
+{
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-.container.full-page {
-  width: 100%;
-  max-width: 100%; /* 画面いっぱい */
-  margin: 0;
-  padding: 16px 24px; /* 最低限の余白 */
-  box-sizing: border-box;
-  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-  color: #443; /* 少し茶色味を帯びた文字色 */
+body {
+background-color: #181b20;
+color: #e1e3e8;
+font-size: 14px;
+line-height: 1.5;
 }
 
-/* --- ヘッダー（テラコッタ） --- */
+.monospace {
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+/* ==========================================================================
+
+レイアウト構成（サイドバー + メインコンテンツ）
+========================================================================== */
+.app-layout {
+display: flex;
+min-height: 100vh;
+background-color: #181b20;
+}
+
+/* --------------------------------------------------------------------------
+サイドバー (Sidebar)
+-------------------------------------------------------------------------- */
+.sidebar {
+width: 280px;
+min-width: 280px;
+background-color: #21252f;
+border-right: 1px solid #2d3241;
+display: flex;
+flex-direction: column;
+padding: 20px 16px;
+gap: 20px;
+height: 100vh;
+position: sticky;
+top: 0;
+overflow-y: auto;
+}
+
+/* ブランドロゴ */
+.sidebar-brand {
+display: flex;
+align-items: center;
+gap: 12px;
+padding-bottom: 16px;
+border-bottom: 1px solid #2d3241;
+}
+
+.brand-icon {
+font-size: 2rem;
+background: #2b303d;
+padding: 6px;
+border-radius: 8px;
+}
+
+.brand-text {
+display: flex;
+flex-direction: column;
+}
+
+.brand-title {
+font-size: 1.15rem;
+font-weight: 700;
+color: #ffffff;
+letter-spacing: 0.5px;
+}
+
+.brand-subtitle {
+font-size: 0.72rem;
+color: #8f95a3;
+font-weight: 500;
+}
+
+/* サイドバー検索・3段階分類フィルターエリア */
+.sidebar-search {
+background-color: #191c23;
+padding: 14px;
+border-radius: 8px;
+border: 1px solid #2d3241;
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.search-label {
+font-size: 0.78rem;
+font-weight: 600;
+color: #a0a6b5;
+display: block;
+}
+
+.sidebar-search-input {
+width: 100%;
+padding: 8px 10px;
+background-color: #2a2e39;
+color: #ffffff;
+border: 1px solid #3f4454;
+border-radius: 6px;
+font-size: 0.85rem;
+outline: none;
+transition: border-color 0.2s ease;
+}
+
+.sidebar-search-input:focus {
+border-color: #ff9800;
+}
+
+/* 3段階連動分類プルダウン */
+.sidebar-category-filter {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.sidebar-search-select {
+width: 100%;
+padding: 8px 10px;
+background-color: #2a2e39;
+color: #ffffff;
+border: 1px solid #3f4454;
+border-radius: 6px;
+font-size: 0.82rem;
+outline: none;
+cursor: pointer;
+transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.sidebar-search-select:focus {
+border-color: #ff9800;
+}
+
+.sidebar-search-select:disabled {
+background-color: #1e2129;
+color: #5d6373;
+border-color: #2a2d37;
+cursor: not-allowed;
+}
+
+.search-hint {
+font-size: 0.75rem;
+color: #ff9800;
+font-weight: 600;
+text-align: right;
+margin-top: 2px;
+}
+
+/* ナビゲーションメニュー */
+.sidebar-nav {
+display: flex;
+flex-direction: column;
+gap: 16px;
+flex-grow: 1;
+}
+
+.nav-section-title {
+font-size: 0.7rem;
+font-weight: 700;
+text-transform: uppercase;
+color: #636b7c;
+letter-spacing: 0.8px;
+margin-top: 8px;
+}
+
+.sidebar-nav ul {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+
+.nav-link {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 9px 12px;
+color: #a0a6b5;
+text-decoration: none;
+border-radius: 6px;
+font-weight: 500;
+font-size: 0.88rem;
+transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+background-color: #2a2f3d;
+color: #ffffff;
+}
+
+.nav-item.active .nav-link {
+background-color: #ff9800;
+color: #ffffff;
+font-weight: 600;
+}
+
+.nav-icon {
+font-size: 1.1rem;
+}
+
+.nav-text {
+flex-grow: 1;
+}
+
+.nav-badge {
+background-color: rgba(255, 255, 255, 0.25);
+color: #ffffff;
+padding: 2px 8px;
+border-radius: 12px;
+font-size: 0.75rem;
+font-weight: 700;
+}
+
+.badge-sub {
+background-color: #3f4454;
+color: #a0a6b5;
+padding: 2px 6px;
+border-radius: 4px;
+font-size: 0.68rem;
+}
+
+.nav-link.disabled {
+opacity: 0.4;
+cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+メインコンテンツエリア (Main Content)
+-------------------------------------------------------------------------- */
+.main-content {
+flex-grow: 1;
+padding: 28px 36px;
+display: flex;
+flex-direction: column;
+gap: 24px;
+overflow-x: hidden;
+}
+
 .app-header {
-  margin-bottom: 16px;
-  border-bottom: 2px solid #d4a373; /* アクセントライン */
-  padding-bottom: 8px;
+border-bottom: 1px solid #2d3241;
+padding-bottom: 16px;
 }
 
-.header-content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.header-title-group h1 {
+font-size: 1.6rem;
+color: #ffffff;
+font-weight: 700;
+display: flex;
+align-items: center;
+gap: 10px;
 }
 
-.header-logo {
-  font-size: 2rem;
+.header-desc {
+font-size: 0.85rem;
+color: #8f95a3;
+margin-top: 4px;
 }
 
-.app-header h1 {
-  font-size: 1.6rem;
-  color: #a0522d; /* テラコッタ/シエナ（オレンジブラウン） */
-  margin: 0;
-  font-weight: 800;
+/* 編集モードバナー */
+.edit-banner {
+background-color: #2d2415;
+border: 1px solid #ff9800;
+color: #ffb74d;
+padding: 12px 18px;
+border-radius: 8px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 0.9rem;
 }
 
-/* --- メインカード（フルワイド化） --- */
+.btn-cancel-sm {
+background-color: #3f3525;
+color: #ffcc80;
+border: 1px solid #ffb74d;
+padding: 4px 12px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 0.8rem;
+transition: background-color 0.2s ease;
+}
+
+.btn-cancel-sm:hover {
+background-color: #ff9800;
+color: #ffffff;
+}
+
+/* ==========================================================================
+2. フォームエリア（カードレイアウト）
+========================================================================== */
 .form-card {
-  background: #ffffff;
-  border: 1px solid #e9e0d3;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 6px 15px -3px rgba(160, 80, 0, 0.06); /* ほんのり茶色の影 */
-  width: 100%;
-  box-sizing: border-box;
+background-color: #21252f;
+border: 1px solid #2d3241;
+border-radius: 12px;
+padding: 24px;
+display: flex;
+flex-direction: column;
+gap: 24px;
 }
 
-/* --- 左右2分割レイアウト --- */
 .main-layout {
-  display: flex;
-  gap: 32px; /* 余白を広めに */
+display: flex;
+gap: 28px;
+}
+
+@media (max-width: 1200px) {
+.main-layout {
+flex-direction: column;
+}
 }
 
 .left-column {
-  flex: 1.3; /* 基本情報を少し広めに */
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+flex: 1.2;
+display: flex;
+flex-direction: column;
+gap: 18px;
 }
 
 .right-column {
-  flex: 1;
-  border-left: 2px dashed #e9e0d3; /* 点線でオシャレに分割 */
-  padding-left: 32px;
+flex: 1;
 }
 
-/* --- フォーム行・グリッド --- */
+/* フォーム要素共通 */
 .form-row {
-  display: flex;
-  gap: 14px;
-  align-items: flex-end;
+display: flex;
+gap: 16px;
+align-items: flex-end;
 }
 
-.col-full { width: 100%; }
-.col-grow { flex: 1; }
-.col-code { width: 180px; }
-
-.col-3-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+.col-full {
+width: 100%;
 }
 
-/* 栄養成分5項目 */
+.col-grow {
+flex-grow: 1;
+}
+
+.col-code {
+width: 140px;
+}
+
+.col-4-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 12px;
+}
+
 .col-5-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-}
-
-/* --- 各セクションボックス（クリーム色ハイライト） --- */
-.section-box {
-  background: #fffdf5; /* 淡いクリーム色 */
-  border: 1px solid #f3e9dc;
-  border-radius: 10px;
-  padding: 16px;
-}
-
-.section-title {
-  font-size: 0.95rem;
-  font-weight: bold;
-  color: #896e51; /* くすんだブラウン */
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 6px;
-}
-
-.section-title .icon {
-  font-size: 1.1rem;
-}
-
-.highlight-box {
-  background-color: #fffdec; /* さらに濃いクリーム色 */
-  border: 1px solid #f9f2ca;
-  padding: 16px;
-  border-radius: 10px;
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 10px;
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+display: flex;
+flex-direction: column;
+gap: 6px;
 }
 
 .form-group label {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #765;
+font-size: 0.82rem;
+font-weight: 600;
+color: #b0b6c5;
 }
 
 .required {
-  color: #d94111; /* 温かい赤 */
+color: #ff5252;
 }
 
-/* --- 入力欄・選択枠（明確な四角枠デザイン） --- */
+/* インプット・セレクト入力コントロール */
 .input-text,
 .select-text,
-.input-textarea,
-input[type="text"],
-input[type="number"],
-select,
-textarea {
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 0.98rem;
-  border: 2px solid #decab5; /* ベージュ系のしっかりした枠線 */
-  border-radius: 8px;
-  background-color: #ffffff;
-  box-sizing: border-box;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  color: #332;
-  appearance: auto;
-  -webkit-appearance: auto;
+.input-readonly,
+.input-textarea {
+width: 100%;
+padding: 9px 12px;
+background-color: #181b20;
+border: 1px solid #363b4a;
+border-radius: 6px;
+color: #ffffff;
+font-size: 0.9rem;
+outline: none;
+transition: all 0.2s ease;
 }
 
 .input-lg,
 .select-lg {
-  padding: 12px 16px;
-  font-size: 1.05rem;
-  font-weight: 500;
-}
-
-.input-textarea {
-  resize: vertical;
-  min-height: 80px;
-  font-family: inherit;
-  line-height: 1.5;
+padding: 11px 14px;
+font-size: 1rem;
 }
 
 .input-text:focus,
 .select-text:focus,
-.input-textarea:focus,
-select:focus {
-  border-color: #a0522d; /* フォーカス時にテラコッタ */
-  box-shadow: 0 0 0 4px rgba(160, 82, 45, 0.12); /* 温かい光 */
+.input-textarea:focus {
+border-color: #ff9800;
+box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
 }
 
-/* 読み取り専用（自動採番コード） */
 .input-readonly {
-  background-color: #f1eae0;
-  border: 2px solid #decab5;
-  color: #654;
-  font-weight: bold;
-  cursor: not-allowed;
+background-color: #13151a;
+color: #ffb74d;
+font-weight: 700;
+border-color: #2d3241;
 }
 
-/* --- アレルギー設定（カラフルに） --- */
+.input-textarea {
+resize: vertical;
+}
+
+.text-right {
+text-align: right;
+}
+
+/* 強調ハイライト枠 */
+.highlight-box {
+background-color: #191c23;
+padding: 14px;
+border-radius: 8px;
+border: 1px solid #2e3444;
+}
+
+/* 計算単価ヒント */
+.price-hint-box {
+background-color: #1a231e;
+border: 1px solid #2e4a38;
+color: #81c784;
+padding: 8px 14px;
+border-radius: 6px;
+font-size: 0.85rem;
+}
+
+/* セクショングループボックス */
+.section-box {
+background-color: #191c23;
+border: 1px solid #2d3241;
+border-radius: 8px;
+padding: 16px;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.section-title {
+font-size: 0.88rem;
+font-weight: 700;
+color: #ffffff;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+/* ==========================================================================
+3. アレルゲン選択エリア
+========================================================================== */
+.allergen-section {
+background-color: #191c23;
+border: 1px solid #2d3241;
+border-radius: 10px;
+padding: 18px;
+display: flex;
+flex-direction: column;
+gap: 16px;
+}
+
 .allergen-section h3 {
-  font-size: 1.1rem;
-  color: #a0522d;
-  margin-top: 0;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.allergen-group {
-  margin-bottom: 20px;
+font-size: 0.95rem;
+color: #ffffff;
+display: flex;
+align-items: center;
+gap: 8px;
+border-bottom: 1px solid #2d3241;
+padding-bottom: 10px;
 }
 
 .allergen-group h4 {
-  font-size: 0.9rem;
-  color: #876;
-  margin-bottom: 10px;
-  padding-left: 8px;
-  border-left: 3px solid #eee;
+font-size: 0.8rem;
+color: #a0a6b5;
+margin-bottom: 10px;
+}
+
+.allergen-group.mandatory h4 {
+color: #ff8a80;
 }
 
 .allergen-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* 少し広く */
-  gap: 8px;
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+gap: 8px;
 }
 
+/* アレルゲンカード */
 .allergen-card {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 10px;
-  border: 1px solid #decab5;
-  border-radius: 8px;
-  background: #ffffff;
-  cursor: pointer;
-  font-size: 0.85rem;
-  user-select: none;
-  transition: all 0.2s;
+display: flex;
+align-items: center;
+gap: 6px;
+background-color: #21252f;
+border: 1px solid #2d3241;
+padding: 8px 10px;
+border-radius: 6px;
+cursor: pointer;
+user-select: none;
+transition: all 0.15s ease;
+}
+
+.allergen-card input[type="checkbox"] {
+display: none;
+}
+
+.allergen-icon {
+font-size: 1rem;
+}
+
+.allergen-name {
+font-size: 0.78rem;
+color: #b0b6c5;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 
 .allergen-card:hover {
-  border-color: #d4a373;
-  background-color: #fffdf5;
+border-color: #4f566b;
 }
 
-/* 🚨 表示義務：選択時（コーラルピンク） */
-.mandatory .allergen-card.selected {
-  background-color: #fff1f0; /* コーラルピンク系背景 */
-  border-color: #ffccc7;
-  color: #c41d7f; /* 濃いピンク文字 */
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(200, 0, 0, 0.08);
+.allergen-card.selected {
+background-color: #ff9800;
+border-color: #ff9800;
 }
 
-/* 📋 表示推奨：選択時（淡いイエロー） */
-.recommended .allergen-card.selected {
-  background-color: #feffe6; /* 淡いイエロー背景 */
-  border-color: #fffb8f;
-  color: #ad8b00; /* 濃いイエロー/ゴールド文字 */
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(200, 150, 0, 0.08);
+.allergen-card.selected .allergen-name {
+color: #ffffff;
+font-weight: 700;
 }
 
-/* --- アクションボタン（テラコッタ） --- */
+/* フォームアクションボタン */
 .form-actions {
-  margin-top: 32px;
-  text-align: center;
+display: flex;
+gap: 12px;
+justify-content: flex-end;
+border-top: 1px solid #2d3241;
+padding-top: 18px;
 }
 
 .btn-primary {
-  background: #a0522d; /* テラコッタ */
-  color: white;
-  border: none;
-  padding: 14px 50px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 30px; /* 丸みを持たせてリッチに */
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 10px rgba(160, 82, 45, 0.25);
+background-color: #ff9800;
+color: #ffffff;
+border: none;
+padding: 12px 28px;
+border-radius: 8px;
+font-size: 0.95rem;
+font-weight: 700;
+cursor: pointer;
+transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .btn-primary:hover {
-  background: #8b4513; /* サドルブラウン（より濃く） */
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(160, 82, 45, 0.3);
+background-color: #f57c00;
 }
 
-.btn-primary:active {
-  transform: translateY(1px);
+.btn-primary.btn-update {
+background-color: #4caf50;
 }
 
-/* --- 登録済み一覧テーブル（フルワイド & カラフル） --- */
-.list-card.full-width-card {
-  margin-top: 24px;
-  margin-bottom: 24px;
-  background: #ffffff;
-  border: 1px solid #e9e0d3;
-  border-radius: 12px;
-  padding: 24px;
-  width: 100%;
-  box-sizing: border-box;
+.btn-primary.btn-update:hover {
+background-color: #388e3c;
 }
 
-.list-card h3 {
-  font-size: 1.2rem;
-  color: #a0522d;
-  margin-top: 0;
-  margin-bottom: 16px;
+.btn-secondary {
+background-color: #3a3f50;
+color: #ffffff;
+border: none;
+padding: 12px 20px;
+border-radius: 8px;
+font-size: 0.9rem;
+cursor: pointer;
+}
+
+/* ==========================================================================
+4. 登録済み一覧テーブル (Table)
+========================================================================== */
+.list-card {
+background-color: #21252f;
+border: 1px solid #2d3241;
+border-radius: 12px;
+padding: 20px;
+display: flex;
+flex-direction: column;
+gap: 16px;
+}
+
+.list-header h3 {
+font-size: 1.05rem;
+color: #ffffff;
 }
 
 .table-wrapper {
-  overflow-x: auto; /* 横スクロール対応 */
+overflow-x: auto;
 }
 
 table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 0.9rem;
-}
-
-th, td {
-  padding: 12px 10px;
-  border-bottom: 1px solid #f3e9dc;
-  text-align: left;
+width: 100%;
+border-collapse: collapse;
+text-align: left;
+font-size: 0.85rem;
 }
 
 th {
-  background: #fdfaf5; /* ベージュ系の薄い背景 */
-  color: #896e51;
-  font-weight: 700;
-  border-top: 1px solid #f3e9dc;
+background-color: #191c23;
+color: #8f95a3;
+padding: 12px 10px;
+font-weight: 600;
+border-bottom: 2px solid #2d3241;
+white-space: nowrap;
 }
 
-/* 隅丸セルのための設定 */
-th:first-child { border-top-left-radius: 8px; border-left: 1px solid #f3e9dc; }
-th:last-child { border-top-right-radius: 8px; border-right: 1px solid #f3e9dc; }
-td:first-child { border-left: 1px solid #f3e9dc; }
-td:last-child { border-right: 1px solid #f3e9dc; }
-tr:last-child td { border-bottom: 1px solid #f3e9dc; }
-tr:last-child td:first-child { border-bottom-left-radius: 8px; }
-tr:last-child td:last-child { border-bottom-right-radius: 8px; }
-
-tr:hover td {
-  background-color: #fffdf8; /* ホバー時にうっすらハイライト */
+td {
+padding: 12px 10px;
+border-bottom: 1px solid #2d3241;
+color: #d1d5db;
+vertical-align: middle;
 }
 
-/* テーブル内の書式 */
-.text-sm { font-size: 0.82rem; color: #665; }
-.text-right { text-align: right; }
-.text-center { text-align: center; }
-.monospace { font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-weight: 500; color: #a0522d; }
+tbody tr:hover {
+background-color: #272c38;
+}
 
-.unit { color: #998; font-size: 0.8em; margin-left: 1px; }
-.nutrition-label { color: #987; font-weight: bold; margin-right: 1px; }
+tbody tr.editing-row {
+background-color: #332b1d;
+}
 
-.additive-cell { max-width: 200px; line-height: 1.4; }
-.allergen-cell { color: #c41d7f; font-weight: 500; }
+.btn-edit-table {
+background-color: #2e3444;
+color: #ffb74d;
+border: 1px solid #ff9800;
+padding: 4px 10px;
+border-radius: 4px;
+font-size: 0.78rem;
+cursor: pointer;
+transition: all 0.2s ease;
+}
 
-/* --- レスポンシブ調整（900px以下） --- */
-@media (max-width: 900px) {
-  .container.full-page { padding: 10px; }
-  .form-card { padding: 16px; }
-  .main-layout { flex-direction: column; gap: 20px; }
-  .right-column {
-    border-left: none;
-    padding-left: 0;
-    border-top: 2px dashed #e9e0d3;
-    padding-top: 20px;
-  }
-  .col-5-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .col-3-grid { grid-template-columns: 1fr; gap: 8px; }
-  .allergen-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+.btn-edit-table:hover {
+background-color: #ff9800;
+color: #ffffff;
+}
+
+.text-muted {
+color: #717786;
+}
+
+.fw-bold {
+font-weight: 700;
+color: #ffffff;
+}
+
+.text-center {
+text-align: center;
+}
+
+.nutrition-label {
+color: #ffb74d;
+font-weight: 600;
+margin-left: 2px;
+}
+
+.unit {
+font-size: 0.7rem;
+color: #717786;
+}
+
+.additive-cell {
+max-width: 140px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.allergen-cell {
+max-width: 180px;
+color: #ff8a80;
+font-weight: 500;
+}
+
+.no-data {
+padding: 30px;
+color: #636b7c;
+font-size: 0.9rem;
 }
