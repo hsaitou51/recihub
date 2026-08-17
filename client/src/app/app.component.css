@@ -1,697 +1,710 @@
 /* ==========================================================================
-KitchenCore - アプリ全体基本スタイル & リセット
+KitchenCore - カフェ風リデザイン（最奥さらに白寄り・完全版）
 ========================================================================== */
 
-{
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+/* ① Google Fonts のインポート */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', 'Noto Sans JP', sans-serif;
 }
 
 body {
-background-color: #181b20;
-color: #e1e3e8;
-font-size: 14px;
-line-height: 1.5;
+  background-color: #F3EAD3;
+  color: #5C5046;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .monospace {
-font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 /* ==========================================================================
-
 レイアウト構成（サイドバー + メインコンテンツ）
 ========================================================================== */
 .app-layout {
-display: flex;
-min-height: 100vh;
-background-color: #181b20;
+  display: flex;
+  min-height: 100vh;
 }
 
 /* --------------------------------------------------------------------------
 サイドバー (Sidebar)
 -------------------------------------------------------------------------- */
 .sidebar {
-width: 280px;
-min-width: 280px;
-background-color: #21252f;
-border-right: 1px solid #2d3241;
-display: flex;
-flex-direction: column;
-padding: 20px 16px;
-gap: 20px;
-height: 100vh;
-position: sticky;
-top: 0;
-overflow-y: auto;
+  width: 280px;
+  min-width: 280px;
+  background-color: #DED4BC;
+  border-right: 1px solid #D0C3A7;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  gap: 28px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
 }
 
-/* ブランドロゴ */
 .sidebar-brand {
-display: flex;
-align-items: center;
-gap: 12px;
-padding-bottom: 16px;
-border-bottom: 1px solid #2d3241;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #D0C3A7;
 }
 
 .brand-icon {
-font-size: 2rem;
-background: #2b303d;
-padding: 6px;
-border-radius: 8px;
+  font-size: 2.2rem;
+  background: #F3EAD3;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .brand-text {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .brand-title {
-font-size: 1.15rem;
-font-weight: 700;
-color: #ffffff;
-letter-spacing: 0.5px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #3D332B;
+  letter-spacing: 0.3px;
 }
 
 .brand-subtitle {
-font-size: 0.72rem;
-color: #8f95a3;
-font-weight: 500;
+  font-size: 0.75rem;
+  color: #726756;
+  font-weight: 500;
 }
 
-/* サイドバー検索・3段階分類フィルターエリア */
 .sidebar-search {
-background-color: #191c23;
-padding: 14px;
-border-radius: 8px;
-border: 1px solid #2d3241;
-display: flex;
-flex-direction: column;
-gap: 10px;
+  background-color: #F3EAD3;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #E5DCB8;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .search-label {
-font-size: 0.78rem;
-font-weight: 600;
-color: #a0a6b5;
-display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #726756;
+  display: block;
+  margin-bottom: 2px;
 }
 
 .sidebar-search-input {
-width: 100%;
-padding: 8px 10px;
-background-color: #2a2e39;
-color: #ffffff;
-border: 1px solid #3f4454;
-border-radius: 6px;
-font-size: 0.85rem;
-outline: none;
-transition: border-color 0.2s ease;
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #FAF6ED;
+  color: #5C5046;
+  border: 1px solid #E5DCB8;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
 .sidebar-search-input:focus {
-border-color: #ff9800;
+  border-color: #C19A6B;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.15);
 }
 
-/* 3段階連動分類プルダウン */
 .sidebar-category-filter {
-display: flex;
-flex-direction: column;
-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .sidebar-search-select {
-width: 100%;
-padding: 8px 10px;
-background-color: #2a2e39;
-color: #ffffff;
-border: 1px solid #3f4454;
-border-radius: 6px;
-font-size: 0.82rem;
-outline: none;
-cursor: pointer;
-transition: border-color 0.2s ease, background-color 0.2s ease;
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #FAF6ED;
+  color: #5C5046;
+  border: 1px solid #E5DCB8;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .sidebar-search-select:focus {
-border-color: #ff9800;
+  border-color: #C19A6B;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.15);
 }
 
 .sidebar-search-select:disabled {
-background-color: #1e2129;
-color: #5d6373;
-border-color: #2a2d37;
-cursor: not-allowed;
+  background-color: #EBE5D3;
+  color: #A39986;
+  border-color: #DDCFB0;
+  cursor: not-allowed;
 }
 
 .search-hint {
-font-size: 0.75rem;
-color: #ff9800;
-font-weight: 600;
-text-align: right;
-margin-top: 2px;
+  font-size: 0.78rem;
+  color: #726756;
+  font-weight: 600;
+  text-align: right;
+  margin-top: 4px;
 }
 
-/* ナビゲーションメニュー */
 .sidebar-nav {
-display: flex;
-flex-direction: column;
-gap: 16px;
-flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
 }
 
 .nav-section-title {
-font-size: 0.7rem;
-font-weight: 700;
-text-transform: uppercase;
-color: #636b7c;
-letter-spacing: 0.8px;
-margin-top: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #8C7F6D;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  padding-left: 12px;
 }
 
 .sidebar-nav ul {
-list-style: none;
-display: flex;
-flex-direction: column;
-gap: 4px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .nav-link {
-display: flex;
-align-items: center;
-gap: 10px;
-padding: 9px 12px;
-color: #a0a6b5;
-text-decoration: none;
-border-radius: 6px;
-font-weight: 500;
-font-size: 0.88rem;
-transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  color: #5C5046;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-background-color: #2a2f3d;
-color: #ffffff;
+  background-color: #F3EAD3;
+  color: #3D332B;
 }
 
 .nav-item.active .nav-link {
-background-color: #ff9800;
-color: #ffffff;
-font-weight: 600;
+  background-color: #C19A6B;
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(193, 154, 107, 0.3);
 }
 
 .nav-icon {
-font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .nav-text {
-flex-grow: 1;
+  flex-grow: 1;
 }
 
 .nav-badge {
-background-color: rgba(255, 255, 255, 0.25);
-color: #ffffff;
-padding: 2px 8px;
-border-radius: 12px;
-font-size: 0.75rem;
-font-weight: 700;
+  background-color: rgba(193, 154, 107, 0.2);
+  color: #C19A6B;
+  padding: 3px 9px;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .badge-sub {
-background-color: #3f4454;
-color: #a0a6b5;
-padding: 2px 6px;
-border-radius: 4px;
-font-size: 0.68rem;
-}
-
-.nav-link.disabled {
-opacity: 0.4;
-cursor: not-allowed;
+  background-color: #D0C3A7;
+  color: #5C5046;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 0.7rem;
 }
 
 /* --------------------------------------------------------------------------
-メインコンテンツエリア (Main Content)
+メインコンテンツエリア (Main Content) - ★最奥をさらに白寄りに調整
 -------------------------------------------------------------------------- */
 .main-content {
-flex-grow: 1;
-padding: 28px 36px;
-display: flex;
-flex-direction: column;
-gap: 24px;
-overflow-x: hidden;
+  flex-grow: 1;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow-x: hidden;
+  background-color: #F8FAFC; /* ★一番奥の背景（白寄り） */
+  border-left: 1px solid #E2E8F0;
 }
 
 .app-header {
-border-bottom: 1px solid #2d3241;
-padding-bottom: 16px;
+  border-bottom: 2px solid #E2E8F0;
+  padding-bottom: 20px;
 }
 
 .header-title-group h1 {
-font-size: 1.6rem;
-color: #ffffff;
-font-weight: 700;
-display: flex;
-align-items: center;
-gap: 10px;
+  font-size: 1.8rem;
+  color: #3D332B;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .header-desc {
-font-size: 0.85rem;
-color: #8f95a3;
-margin-top: 4px;
+  font-size: 0.9rem;
+  color: #726756;
+  margin-top: 6px;
 }
 
-/* 編集モードバナー */
 .edit-banner {
-background-color: #2d2415;
-border: 1px solid #ff9800;
-color: #ffb74d;
-padding: 12px 18px;
-border-radius: 8px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-font-size: 0.9rem;
+  background-color: #FFF3E0;
+  border: 1px solid #E67E22;
+  color: #9C6644;
+  padding: 14px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(230, 126, 34, 0.1);
 }
 
 .btn-cancel-sm {
-background-color: #3f3525;
-color: #ffcc80;
-border: 1px solid #ffb74d;
-padding: 4px 12px;
-border-radius: 4px;
-cursor: pointer;
-font-size: 0.8rem;
-transition: background-color 0.2s ease;
+  background-color: #FFE0B2;
+  color: #795548;
+  border: 1px solid #E67E22;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
 }
 
 .btn-cancel-sm:hover {
-background-color: #ff9800;
-color: #ffffff;
+  background-color: #E67E22;
+  color: #FFFFFF;
 }
 
 /* ==========================================================================
-2. フォームエリア（カードレイアウト）
+2. フォームエリア（2枚目のラテベージュを維持）
 ========================================================================== */
 .form-card {
-background-color: #21252f;
-border: 1px solid #2d3241;
-border-radius: 12px;
-padding: 24px;
-display: flex;
-flex-direction: column;
-gap: 24px;
+  background-color: #FAF6ED;
+  border: 1px solid #E3D8BE;
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
 }
 
 .main-layout {
-display: flex;
-gap: 28px;
+  display: flex;
+  gap: 32px;
 }
 
 @media (max-width: 1200px) {
-.main-layout {
-flex-direction: column;
-}
+  .main-layout {
+    flex-direction: column;
+  }
 }
 
 .left-column {
-flex: 1.2;
-display: flex;
-flex-direction: column;
-gap: 18px;
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .right-column {
-flex: 1;
+  flex: 1;
 }
 
-/* フォーム要素共通 */
 .form-row {
-display: flex;
-gap: 16px;
-align-items: flex-end;
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
 }
 
 .col-full {
-width: 100%;
+  width: 100%;
 }
 
 .col-grow {
-flex-grow: 1;
+  flex-grow: 1;
 }
 
 .col-code {
-width: 140px;
+  width: 150px;
 }
 
 .col-4-grid {
-display: grid;
-grid-template-columns: repeat(4, 1fr);
-gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
 }
 
 .col-5-grid {
-display: grid;
-grid-template-columns: repeat(5, 1fr);
-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
 }
 
 .form-group {
-display: flex;
-flex-direction: column;
-gap: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .form-group label {
-font-size: 0.82rem;
-font-weight: 600;
-color: #b0b6c5;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #726756;
 }
 
 .required {
-color: #ff5252;
+  color: #E74C3C;
 }
 
-/* インプット・セレクト入力コントロール */
 .input-text,
 .select-text,
 .input-readonly,
 .input-textarea {
-width: 100%;
-padding: 9px 12px;
-background-color: #181b20;
-border: 1px solid #363b4a;
-border-radius: 6px;
-color: #ffffff;
-font-size: 0.9rem;
-outline: none;
-transition: all 0.2s ease;
+  width: 100%;
+  padding: 12px 14px;
+  background-color: #FFFFFF;
+  border: 1px solid #E3D8BE;
+  border-radius: 8px;
+  color: #3D332B;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
 .input-lg,
 .select-lg {
-padding: 11px 14px;
-font-size: 1rem;
+  padding: 14px 16px;
+  font-size: 1.1rem;
 }
 
 .input-text:focus,
 .select-text:focus,
 .input-textarea:focus {
-border-color: #ff9800;
-box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.2);
+  border-color: #C19A6B;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.15);
 }
 
 .input-readonly {
-background-color: #13151a;
-color: #ffb74d;
-font-weight: 700;
-border-color: #2d3241;
+  background-color: #EADFC6;
+  color: #726756;
+  font-weight: 700;
+  border-color: #E3D8BE;
 }
 
 .input-textarea {
-resize: vertical;
+  resize: vertical;
 }
 
 .text-right {
-text-align: right;
+  text-align: right;
 }
 
-/* 強調ハイライト枠 */
 .highlight-box {
-background-color: #191c23;
-padding: 14px;
-border-radius: 8px;
-border: 1px solid #2e3444;
+  background-color: #EADFC6;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #E3D8BE;
 }
 
-/* 計算単価ヒント */
 .price-hint-box {
-background-color: #1a231e;
-border: 1px solid #2e4a38;
-color: #81c784;
-padding: 8px 14px;
-border-radius: 6px;
-font-size: 0.85rem;
+  background-color: #E9F4EC;
+  border: 1px solid #A3D9B1;
+  color: #2D6A4F;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
 }
 
-/* セクショングループボックス */
 .section-box {
-background-color: #191c23;
-border: 1px solid #2d3241;
-border-radius: 8px;
-padding: 16px;
-display: flex;
-flex-direction: column;
-gap: 12px;
+  background-color: #EADFC6;
+  border: 1px solid #E3D8BE;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .section-title {
-font-size: 0.88rem;
-font-weight: 700;
-color: #ffffff;
-display: flex;
-align-items: center;
-gap: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3D332B;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* ==========================================================================
 3. アレルゲン選択エリア
 ========================================================================== */
 .allergen-section {
-background-color: #191c23;
-border: 1px solid #2d3241;
-border-radius: 10px;
-padding: 18px;
-display: flex;
-flex-direction: column;
-gap: 16px;
+  background-color: #EADFC6;
+  border: 1px solid #E3D8BE;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .allergen-section h3 {
-font-size: 0.95rem;
-color: #ffffff;
-display: flex;
-align-items: center;
-gap: 8px;
-border-bottom: 1px solid #2d3241;
-padding-bottom: 10px;
+  font-size: 1rem;
+  color: #3D332B;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #E3D8BE;
+  padding-bottom: 12px;
 }
 
 .allergen-group h4 {
-font-size: 0.8rem;
-color: #a0a6b5;
-margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: #726756;
+  margin-bottom: 12px;
 }
 
 .allergen-group.mandatory h4 {
-color: #ff8a80;
+  color: #D9534F;
 }
 
 .allergen-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
 }
 
-/* アレルゲンカード */
 .allergen-card {
-display: flex;
-align-items: center;
-gap: 6px;
-background-color: #21252f;
-border: 1px solid #2d3241;
-padding: 8px 10px;
-border-radius: 6px;
-cursor: pointer;
-user-select: none;
-transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FAF6ED;
+  border: 1px solid #E3D8BE;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
 }
 
 .allergen-card input[type="checkbox"] {
-display: none;
+  display: none;
 }
 
 .allergen-icon {
-font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .allergen-name {
-font-size: 0.78rem;
-color: #b0b6c5;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+  font-size: 0.82rem;
+  color: #5C5046;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .allergen-card:hover {
-border-color: #4f566b;
+  border-color: #C19A6B;
+  background-color: #FFFFFF;
 }
 
 .allergen-card.selected {
-background-color: #ff9800;
-border-color: #ff9800;
+  background-color: #C19A6B;
+  border-color: #C19A6B;
+  box-shadow: 0 2px 4px rgba(193, 154, 107, 0.3);
 }
 
 .allergen-card.selected .allergen-name {
-color: #ffffff;
-font-weight: 700;
+  color: #FFFFFF;
+  font-weight: 700;
 }
 
-/* フォームアクションボタン */
 .form-actions {
-display: flex;
-gap: 12px;
-justify-content: flex-end;
-border-top: 1px solid #2d3241;
-padding-top: 18px;
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  border-top: 2px solid #E3D8BE;
+  padding-top: 22px;
 }
 
 .btn-primary {
-background-color: #ff9800;
-color: #ffffff;
-border: none;
-padding: 12px 28px;
-border-radius: 8px;
-font-size: 0.95rem;
-font-weight: 700;
-cursor: pointer;
-transition: background-color 0.2s ease, transform 0.1s ease;
+  background-color: #C19A6B;
+  color: #FFFFFF;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(193, 154, 107, 0.3);
 }
 
 .btn-primary:hover {
-background-color: #f57c00;
+  background-color: #A67C52;
+  transform: translateY(-1px);
 }
 
 .btn-primary.btn-update {
-background-color: #4caf50;
+  background-color: #4A7C59;
 }
 
 .btn-primary.btn-update:hover {
-background-color: #388e3c;
+  background-color: #3A6347;
 }
 
 .btn-secondary {
-background-color: #3a3f50;
-color: #ffffff;
-border: none;
-padding: 12px 20px;
-border-radius: 8px;
-font-size: 0.9rem;
-cursor: pointer;
+  background-color: #E3D8BE;
+  color: #5C5046;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #D2C6A7;
 }
 
 /* ==========================================================================
 4. 登録済み一覧テーブル (Table)
 ========================================================================== */
 .list-card {
-background-color: #21252f;
-border: 1px solid #2d3241;
-border-radius: 12px;
-padding: 20px;
-display: flex;
-flex-direction: column;
-gap: 16px;
+  background-color: #FAF6ED;
+  border: 1px solid #E3D8BE;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
 }
 
 .list-header h3 {
-font-size: 1.05rem;
-color: #ffffff;
+  font-size: 1.15rem;
+  color: #3D332B;
 }
 
 .table-wrapper {
-overflow-x: auto;
+  overflow-x: auto;
 }
 
 table {
-width: 100%;
-border-collapse: collapse;
-text-align: left;
-font-size: 0.85rem;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
 }
 
 th {
-background-color: #191c23;
-color: #8f95a3;
-padding: 12px 10px;
-font-weight: 600;
-border-bottom: 2px solid #2d3241;
-white-space: nowrap;
+  background-color: #EADFC6;
+  color: #726756;
+  padding: 14px 12px;
+  font-weight: 600;
+  border-bottom: 2px solid #E3D8BE;
+  white-space: nowrap;
 }
 
 td {
-padding: 12px 10px;
-border-bottom: 1px solid #2d3241;
-color: #d1d5db;
-vertical-align: middle;
+  padding: 14px 12px;
+  border-bottom: 1px solid #E3D8BE;
+  color: #5C5046;
+  vertical-align: middle;
+  background-color: #FFFFFF;
 }
 
-tbody tr:hover {
-background-color: #272c38;
+tbody tr:hover td {
+  background-color: #F8F4EC;
 }
 
-tbody tr.editing-row {
-background-color: #332b1d;
+tbody tr.editing-row td {
+  background-color: #FFF3E0;
 }
 
 .btn-edit-table {
-background-color: #2e3444;
-color: #ffb74d;
-border: 1px solid #ff9800;
-padding: 4px 10px;
-border-radius: 4px;
-font-size: 0.78rem;
-cursor: pointer;
-transition: all 0.2s ease;
+  background-color: #FFF3E0;
+  color: #A67C52;
+  border: 1px solid #E67E22;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn-edit-table:hover {
-background-color: #ff9800;
-color: #ffffff;
+  background-color: #E67E22;
+  color: #FFFFFF;
 }
 
 .text-muted {
-color: #717786;
+  color: #BDB4A6;
 }
 
 .fw-bold {
-font-weight: 700;
-color: #ffffff;
+  font-weight: 700;
+  color: #3D332B;
 }
 
 .text-center {
-text-align: center;
+  text-align: center;
 }
 
 .nutrition-label {
-color: #ffb74d;
-font-weight: 600;
-margin-left: 2px;
+  color: #C19A6B;
+  font-weight: 600;
+  margin-left: 2px;
 }
 
 .unit {
-font-size: 0.7rem;
-color: #717786;
+  font-size: 0.75rem;
+  color: #8A7E6D;
 }
 
 .additive-cell {
-max-width: 140px;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .allergen-cell {
-max-width: 180px;
-color: #ff8a80;
-font-weight: 500;
+  max-width: 180px;
+  color: #D9534F;
+  font-weight: 500;
 }
 
 .no-data {
-padding: 30px;
-color: #636b7c;
-font-size: 0.9rem;
+  padding: 40px;
+  color: #BDB4A6;
+  font-size: 0.95rem;
+  text-align: center;
+  background-color: #FFFFFF;
 }
