@@ -1,5 +1,5 @@
 /* ==========================================================================
-KitchenCore - カフェ風リデザイン（最奥さらに白寄り・完全版）
+KitchenCore - シャープなネイビー＆ライトグレー基調（完全版：構成エディター対応）
 ========================================================================== */
 
 /* ① Google Fonts のインポート */
@@ -13,8 +13,8 @@ KitchenCore - カフェ風リデザイン（最奥さらに白寄り・完全版
 }
 
 body {
-  background-color: #F3EAD3;
-  color: #5C5046;
+  background-color: #0f172a; /* 最奥ベース（ダークネイビー） */
+  color: #334155;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -32,13 +32,13 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-サイドバー (Sidebar)
+サイドバー (Sidebar) - 濃いネイビー基調
 -------------------------------------------------------------------------- */
 .sidebar {
   width: 280px;
   min-width: 280px;
-  background-color: #DED4BC;
-  border-right: 1px solid #D0C3A7;
+  background-color: #0f172a;
+  border-right: 1px solid #1e293b;
   display: flex;
   flex-direction: column;
   padding: 24px 20px;
@@ -54,15 +54,15 @@ body {
   align-items: center;
   gap: 14px;
   padding-bottom: 20px;
-  border-bottom: 2px solid #D0C3A7;
+  border-bottom: 2px solid #1e293b;
 }
 
 .brand-icon {
   font-size: 2.2rem;
-  background: #F3EAD3;
+  background: #1e293b;
   padding: 8px;
   border-radius: 12px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .brand-text {
@@ -73,22 +73,22 @@ body {
 .brand-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #3D332B;
+  color: #f8fafc;
   letter-spacing: 0.3px;
 }
 
 .brand-subtitle {
   font-size: 0.75rem;
-  color: #726756;
+  color: #94a3b8;
   font-weight: 500;
 }
 
 .sidebar-search {
-  background-color: #F3EAD3;
+  background-color: #1e293b;
   padding: 16px;
   border-radius: 12px;
-  border: 1px solid #E5DCB8;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  border: 1px solid #334155;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -97,7 +97,7 @@ body {
 .search-label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #726756;
+  color: #94a3b8;
   display: block;
   margin-bottom: 2px;
 }
@@ -105,9 +105,9 @@ body {
 .sidebar-search-input {
   width: 100%;
   padding: 10px 12px;
-  background-color: #FAF6ED;
-  color: #5C5046;
-  border: 1px solid #E5DCB8;
+  background-color: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
   border-radius: 8px;
   font-size: 0.9rem;
   outline: none;
@@ -115,9 +115,9 @@ body {
 }
 
 .sidebar-search-input:focus {
-  border-color: #C19A6B;
-  background-color: #FFFFFF;
-  box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.15);
+  border-color: #2563eb;
+  background-color: #0f172a;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
 .sidebar-category-filter {
@@ -129,9 +129,9 @@ body {
 .sidebar-search-select {
   width: 100%;
   padding: 10px 12px;
-  background-color: #FAF6ED;
-  color: #5C5046;
-  border: 1px solid #E5DCB8;
+  background-color: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
   border-radius: 8px;
   font-size: 0.85rem;
   outline: none;
@@ -140,21 +140,21 @@ body {
 }
 
 .sidebar-search-select:focus {
-  border-color: #C19A6B;
-  background-color: #FFFFFF;
-  box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.15);
+  border-color: #2563eb;
+  background-color: #0f172a;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
 .sidebar-search-select:disabled {
-  background-color: #EBE5D3;
-  color: #A39986;
-  border-color: #DDCFB0;
+  background-color: #1e293b;
+  color: #64748b;
+  border-color: #2e3b4e;
   cursor: not-allowed;
 }
 
 .search-hint {
   font-size: 0.78rem;
-  color: #726756;
+  color: #94a3b8;
   font-weight: 600;
   text-align: right;
   margin-top: 4px;
@@ -171,7 +171,7 @@ body {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #8C7F6D;
+  color: #64748b;
   letter-spacing: 1px;
   margin-top: 10px;
   padding-left: 12px;
@@ -189,7 +189,7 @@ body {
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
-  color: #5C5046;
+  color: #cbd5e1;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 500;
@@ -198,15 +198,15 @@ body {
 }
 
 .nav-link:hover {
-  background-color: #F3EAD3;
-  color: #3D332B;
+  background-color: #1e293b;
+  color: #ffffff;
 }
 
 .nav-item.active .nav-link {
-  background-color: #C19A6B;
+  background-color: #2563eb;
   color: #FFFFFF;
   font-weight: 600;
-  box-shadow: 0 2px 4px rgba(193, 154, 107, 0.3);
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
 }
 
 .nav-icon {
@@ -218,8 +218,8 @@ body {
 }
 
 .nav-badge {
-  background-color: rgba(193, 154, 107, 0.2);
-  color: #C19A6B;
+  background-color: rgba(37, 99, 235, 0.2);
+  color: #60a5fa;
   padding: 3px 9px;
   border-radius: 14px;
   font-size: 0.8rem;
@@ -227,15 +227,15 @@ body {
 }
 
 .badge-sub {
-  background-color: #D0C3A7;
-  color: #5C5046;
+  background-color: #1e293b;
+  color: #cbd5e1;
   padding: 2px 7px;
   border-radius: 6px;
   font-size: 0.7rem;
 }
 
 /* --------------------------------------------------------------------------
-メインコンテンツエリア (Main Content) - ★最奥をさらに白寄りに調整
+メインコンテンツエリア (Main Content) - 清潔感のあるライトグレー
 -------------------------------------------------------------------------- */
 .main-content {
   flex-grow: 1;
@@ -244,18 +244,18 @@ body {
   flex-direction: column;
   gap: 28px;
   overflow-x: hidden;
-  background-color: #F8FAFC; /* ★一番奥の背景（白寄り） */
-  border-left: 1px solid #E2E8F0;
+  background-color: #f8fafc;
+  border-left: 1px solid #e2e8f0;
 }
 
 .app-header {
-  border-bottom: 2px solid #E2E8F0;
+  border-bottom: 2px solid #e2e8f0;
   padding-bottom: 20px;
 }
 
 .header-title-group h1 {
   font-size: 1.8rem;
-  color: #3D332B;
+  color: #0f172a;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -264,27 +264,27 @@ body {
 
 .header-desc {
   font-size: 0.9rem;
-  color: #726756;
+  color: #64748b;
   margin-top: 6px;
 }
 
 .edit-banner {
-  background-color: #FFF3E0;
-  border: 1px solid #E67E22;
-  color: #9C6644;
+  background-color: #eff6ff;
+  border: 1px solid #3b82f6;
+  color: #1e40af;
   padding: 14px 20px;
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.95rem;
-  box-shadow: 0 2px 4px rgba(230, 126, 34, 0.1);
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
 }
 
 .btn-cancel-sm {
-  background-color: #FFE0B2;
-  color: #795548;
-  border: 1px solid #E67E22;
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #3b82f6;
   padding: 6px 14px;
   border-radius: 6px;
   cursor: pointer;
@@ -293,22 +293,28 @@ body {
 }
 
 .btn-cancel-sm:hover {
-  background-color: #E67E22;
+  background-color: #3b82f6;
   color: #FFFFFF;
 }
 
 /* ==========================================================================
-2. フォームエリア（2枚目のラテベージュを維持）
+2. フォームエリア ＆ 各種カード（エディター含む）
 ========================================================================== */
-.form-card {
-  background-color: #FAF6ED;
-  border: 1px solid #E3D8BE;
+.form-card,
+.recipe-card, 
+.recipe-container, 
+.recipe-section,
+.draft-editor,
+.recipe-editor,
+.composition-editor {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 28px;
   display: flex;
   flex-direction: column;
   gap: 28px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
 .main-layout {
@@ -372,11 +378,11 @@ body {
 .form-group label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #726756;
+  color: #475569;
 }
 
 .required {
-  color: #E74C3C;
+  color: #ef4444;
 }
 
 .input-text,
@@ -385,10 +391,10 @@ body {
 .input-textarea {
   width: 100%;
   padding: 12px 14px;
-  background-color: #FFFFFF;
-  border: 1px solid #E3D8BE;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  color: #3D332B;
+  color: #0f172a;
   font-size: 1rem;
   outline: none;
   transition: all 0.3s ease;
@@ -403,16 +409,16 @@ body {
 .input-text:focus,
 .select-text:focus,
 .input-textarea:focus {
-  border-color: #C19A6B;
-  background-color: #FFFFFF;
-  box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.15);
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .input-readonly {
-  background-color: #EADFC6;
-  color: #726756;
+  background-color: #f1f5f9;
+  color: #475569;
   font-weight: 700;
-  border-color: #E3D8BE;
+  border-color: #cbd5e1;
 }
 
 .input-textarea {
@@ -424,24 +430,24 @@ body {
 }
 
 .highlight-box {
-  background-color: #EADFC6;
+  background-color: #f8fafc;
   padding: 16px;
   border-radius: 10px;
-  border: 1px solid #E3D8BE;
+  border: 1px solid #e2e8f0;
 }
 
 .price-hint-box {
-  background-color: #E9F4EC;
-  border: 1px solid #A3D9B1;
-  color: #2D6A4F;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
   padding: 10px 16px;
   border-radius: 8px;
   font-size: 0.9rem;
 }
 
 .section-box {
-  background-color: #EADFC6;
-  border: 1px solid #E3D8BE;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 20px;
   display: flex;
@@ -452,7 +458,7 @@ body {
 .section-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #3D332B;
+  color: #0f172a;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -462,8 +468,8 @@ body {
 3. アレルゲン選択エリア
 ========================================================================== */
 .allergen-section {
-  background-color: #EADFC6;
-  border: 1px solid #E3D8BE;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 20px;
   display: flex;
@@ -473,22 +479,22 @@ body {
 
 .allergen-section h3 {
   font-size: 1rem;
-  color: #3D332B;
+  color: #0f172a;
   display: flex;
   align-items: center;
   gap: 10px;
-  border-bottom: 1px solid #E3D8BE;
+  border-bottom: 1px solid #e2e8f0;
   padding-bottom: 12px;
 }
 
 .allergen-group h4 {
   font-size: 0.85rem;
-  color: #726756;
+  color: #475569;
   margin-bottom: 12px;
 }
 
 .allergen-group.mandatory h4 {
-  color: #D9534F;
+  color: #ef4444;
 }
 
 .allergen-grid {
@@ -501,8 +507,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #FAF6ED;
-  border: 1px solid #E3D8BE;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
   padding: 10px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -520,21 +526,21 @@ body {
 
 .allergen-name {
   font-size: 0.82rem;
-  color: #5C5046;
+  color: #334155;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .allergen-card:hover {
-  border-color: #C19A6B;
-  background-color: #FFFFFF;
+  border-color: #2563eb;
+  background-color: #f8fafc;
 }
 
 .allergen-card.selected {
-  background-color: #C19A6B;
-  border-color: #C19A6B;
-  box-shadow: 0 2px 4px rgba(193, 154, 107, 0.3);
+  background-color: #2563eb;
+  border-color: #2563eb;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
 }
 
 .allergen-card.selected .allergen-name {
@@ -546,12 +552,12 @@ body {
   display: flex;
   gap: 16px;
   justify-content: flex-end;
-  border-top: 2px solid #E3D8BE;
+  border-top: 2px solid #e2e8f0;
   padding-top: 22px;
 }
 
 .btn-primary {
-  background-color: #C19A6B;
+  background-color: #2563eb;
   color: #FFFFFF;
   border: none;
   padding: 14px 32px;
@@ -560,25 +566,25 @@ body {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(193, 154, 107, 0.3);
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: #A67C52;
+  background-color: #1d4ed8;
   transform: translateY(-1px);
 }
 
 .btn-primary.btn-update {
-  background-color: #4A7C59;
+  background-color: #059669;
 }
 
 .btn-primary.btn-update:hover {
-  background-color: #3A6347;
+  background-color: #047857;
 }
 
 .btn-secondary {
-  background-color: #E3D8BE;
-  color: #5C5046;
+  background-color: #e2e8f0;
+  color: #334155;
   border: none;
   padding: 14px 24px;
   border-radius: 10px;
@@ -589,26 +595,65 @@ body {
 }
 
 .btn-secondary:hover {
-  background-color: #D2C6A7;
+  background-color: #cbd5e1;
 }
 
 /* ==========================================================================
-4. 登録済み一覧テーブル (Table)
+4. 登録済み一覧テーブル & 構成エディター専用パーツ
 ========================================================================== */
 .list-card {
-  background-color: #FAF6ED;
-  border: 1px solid #E3D8BE;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
-.list-header h3 {
+.list-header h3,
+.recipe-title,
+.draft-title,
+.editor-title {
   font-size: 1.15rem;
-  color: #3D332B;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.recipe-header,
+.draft-header,
+.editor-header {
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.recipe-item-row,
+.draft-item-row,
+.editor-item-row {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.recipe-item-row:hover,
+.draft-item-row:hover,
+.editor-item-row:hover {
+  background-color: #f8fafc;
+  border-color: #2563eb;
+}
+
+.recipe-process-step,
+.draft-process-step,
+.editor-process-step {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  color: #334155;
 }
 
 .table-wrapper {
@@ -623,34 +668,34 @@ table {
 }
 
 th {
-  background-color: #EADFC6;
-  color: #726756;
+  background-color: #f1f5f9;
+  color: #475569;
   padding: 14px 12px;
   font-weight: 600;
-  border-bottom: 2px solid #E3D8BE;
+  border-bottom: 2px solid #e2e8f0;
   white-space: nowrap;
 }
 
 td {
   padding: 14px 12px;
-  border-bottom: 1px solid #E3D8BE;
-  color: #5C5046;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
   vertical-align: middle;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 tbody tr:hover td {
-  background-color: #F8F4EC;
+  background-color: #f8fafc;
 }
 
 tbody tr.editing-row td {
-  background-color: #FFF3E0;
+  background-color: #eff6ff;
 }
 
 .btn-edit-table {
-  background-color: #FFF3E0;
-  color: #A67C52;
-  border: 1px solid #E67E22;
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #3b82f6;
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 0.8rem;
@@ -660,17 +705,17 @@ tbody tr.editing-row td {
 }
 
 .btn-edit-table:hover {
-  background-color: #E67E22;
+  background-color: #3b82f6;
   color: #FFFFFF;
 }
 
 .text-muted {
-  color: #BDB4A6;
+  color: #94a3b8;
 }
 
 .fw-bold {
   font-weight: 700;
-  color: #3D332B;
+  color: #0f172a;
 }
 
 .text-center {
@@ -678,14 +723,14 @@ tbody tr.editing-row td {
 }
 
 .nutrition-label {
-  color: #C19A6B;
+  color: #2563eb;
   font-weight: 600;
   margin-left: 2px;
 }
 
 .unit {
   font-size: 0.75rem;
-  color: #8A7E6D;
+  color: #64748b;
 }
 
 .additive-cell {
@@ -697,14 +742,270 @@ tbody tr.editing-row td {
 
 .allergen-cell {
   max-width: 180px;
-  color: #D9534F;
+  color: #ef4444;
   font-weight: 500;
 }
 
 .no-data {
   padding: 40px;
-  color: #BDB4A6;
+  color: #94a3b8;
   font-size: 0.95rem;
   text-align: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+タブメニューバー
+-------------------------------------------------------------------------- */
+.tab-menu-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 16px;
+}
+
+.btn-tab {
+  background-color: #ffffff;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.btn-tab:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.btn-tab.active {
+  background-color: #2563eb;
+  color: #FFFFFF;
+  border-color: #2563eb;
+  font-weight: 700;
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.25);
+}
+
+/* ==========================================================================
+【強力強制適用】レシピ管理ページ・下書き品構成エディターのネイビー＆ライトグレー化
+========================================================================== */
+
+/* レシピ管理・下書き品に関するあらゆるコンテナ・カードの背景と枠線を強制統一 */
+.recipe-manager,
+.recipe-management,
+.recipe-container,
+.recipe-card,
+.recipe-editor,
+.draft-editor,
+.draft-composition,
+.composition-editor,
+div[class*="recipe"],
+div[class*="draft"],
+div[class*="composition"],
+div[class*="editor"] {
+  background-color: #ffffff !important;
+  color: #334155 !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* ヘッダー・タイトル部分 */
+.recipe-header,
+.draft-header,
+.editor-header,
+div[class*="recipe"] h2,
+div[class*="recipe"] h3,
+div[class*="draft"] h2,
+div[class*="draft"] h3 {
+  color: #0f172a !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+/* 内部の小セクションや行（リスト、ステップなど） */
+.recipe-item-row,
+.draft-item-row,
+.composition-row,
+.editor-row,
+.recipe-process-step,
+.draft-step,
+div[class*="item"],
+div[class*="row"],
+div[class*="step"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+/* ホバー時の挙動 */
+.recipe-item-row:hover,
+.draft-item-row:hover,
+.composition-row:hover,
+.editor-row:hover {
+  background-color: #f8fafc !important;
+  border-color: #2563eb !important;
+}
+
+/* 入力フィールド・セレクトボックス（エディター内） */
+.recipe-editor input,
+.recipe-editor select,
+.recipe-editor textarea,
+.draft-editor input,
+.draft-editor select,
+.draft-editor textarea,
+.composition-editor input,
+.composition-editor select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.recipe-editor input:focus,
+.recipe-editor select:focus,
+.recipe-editor textarea:focus,
+.draft-editor input:focus,
+.draft-editor select:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* ==========================================================================
+ 構成原材料の追加行（プルダウン・使用量・追加ボタンのバランス調整）
+========================================================================== */
+
+/* 1. 「構成原材料の追加」の下にある入力エリアの行をグリッドレイアウトに強制変更 */
+.form-row, 
+.composition-add-row,
+div[style*="grid"],
+div[class*="add"] {
+  display: grid !important;
+  /* 左から [原材料選択: 2fr] [使用量: 1fr] [追加ボタン: 150px] の比率にする */
+  grid-template-columns: 2fr 1fr 150px !important;
+  gap: 16px !important;
+  align-items: flex-end !important;
+}
+
+/* 2. 「原材料を選んでください」のプルダウンを適切に収まるようにする */
+select.input-text,
+select.select-text,
+select[id*="ingredient"],
+select[class*="ingredient"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 3. 一番右にある「＋リストに追加」ボタンの幅を広く、押しやすくする */
+button.btn-primary,
+button[class*="add"],
+.btn-add {
+  width: 100% !important;
+  min-width: 140px !important;
+  padding: 12px 16px !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2) !important;
+}
+
+button.btn-primary:hover,
+button[class*="add"]:hover {
+  background-color: #1d4ed8 !important;
+}
+
+/* 4. このセクションの背景色（ベージュ）を完全に清潔な白＆ライトグレーに上書き */
+.form-card,
+.recipe-card,
+.section-box,
+div[style*="background"] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* ==========================================================================
+ メニュー名・分類カテゴリ・想定売価を同一行（3カラム）に強制配置
+========================================================================== */
+
+/* 1. 親コンテナを強制的に3等分（または適切な3カラム）のグリッドにする */
+.form-row.col-4-grid,
+div[class*="col-4-grid"] {
+  display: grid !important;
+  grid-template-columns: 2fr 1fr 1fr !important; /* メニュー名:2, 分類:1, 売価:1 の比率 */
+  gap: 16px !important;
+  align-items: start !important;
+  width: 100% !important;
+}
+
+/* 2. 「メニュー名」の入力欄が取っている横長指定（span 2 など）を強制解除する */
+.form-row.col-4-grid > div,
+div[class*="col-4-grid"] > div {
+  grid-column: auto !important; /* span 2 などの幅占有を無効化 */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  width: 100% !important;
+  min-width: 0 !important; /* グリッド内でのはみ出しを防ぐ */
+}
+
+/* 3. ラベルのスタイル */
+.form-row.col-4-grid label,
+div[class*="col-4-grid"] label {
+  font-weight: 600 !important;
+  color: #0f172a !important;
+  font-size: 0.9rem !important;
+  display: block !important;
+  white-space: nowrap !important;
+}
+
+/* 4. 入力欄・セレクトボックスの高さ・見た目の統一 */
+.form-row.col-4-grid input,
+.form-row.col-4-grid select,
+div[class*="col-4-grid"] input,
+div[class*="col-4-grid"] select {
+  width: 100% !important;
+  height: 46px !important;
+  padding: 10px 14px !important;
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  color: #0f172a !important;
+  font-size: 0.95rem !important;
+  box-sizing: border-box !important;
+}
+
+.form-row.col-4-grid input:focus,
+.form-row.col-4-grid select:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+  outline: none !important;
+}
+
+/* ==========================================================================
+ メニュー名・仕掛品名フィールドの左寄せ調整
+========================================================================== */
+
+/* 1. メニュー名が入っているグリッドカラム、またはフォームグループ自体のテキストと配置を左寄せに */
+.form-row.col-4-grid > div:first-child,
+div[class*="col-4-grid"] > div:first-child,
+.form-group:has(label[for*="name"]),
+.form-group:has(input[placeholder*="玉葱ソテー"]) {
+  text-align: left !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  margin-left: 0 !important;
+}
+
+/* 2. 入力欄やラベルのテキストを強制的に左寄せにする */
+.form-row.col-4-grid > div:first-child input,
+.form-row.col-4-grid > div:first-child label,
+div[class*="col-4-grid"] > div:first-child input,
+div[class*="col-4-grid"] > div:first-child label {
+  text-align: left !important;
 }
